@@ -30,7 +30,7 @@ export default function ExperimentDetailPage() {
         </section>
 
         <div style={{ marginTop: 28 }}>
-          <Replay controls={false} />
+          <Replay controls showMetrics />
         </div>
       </div>
     </AppShell>

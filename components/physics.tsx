@@ -35,7 +35,8 @@ export function Trajectory({ compact = false, frameIndex }: { compact?: boolean;
 
 export function Replay({ controls = true, showMetrics = true }: { controls?: boolean; showMetrics?: boolean }) {
   const [playing, setPlaying] = useState(false);
-  const [frame, setFrame] = useState(0);
+  // Start on the measured path so the idle replay reads as a result, not an empty launch state.
+  const [frame, setFrame] = useState(2);
 
   useEffect(() => {
     if (!playing) return;
