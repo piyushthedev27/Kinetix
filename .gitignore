@@ -1,0 +1,7 @@
+node_modules
+.next
+tsconfig.tsbuildinfo
+start.log
+start.err
+Docs/
+Design-system/
