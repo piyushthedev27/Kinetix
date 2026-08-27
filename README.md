@@ -2,6 +2,7 @@
 
 Kinetix is a Next.js prototype for a phone-first Physics Lab. The frontend uses realistic mock experiment data until the phone camera, tracking, Office Kit, and backend integrations are available.
 
+
 ## Run locally
 
 ```bash
