@@ -83,14 +83,14 @@ export function LivePhysicsLab({ compact = false }: { compact?: boolean }) {
   }, []);
 
   return (
-    <>
+    <div className="live-physics-lab-shell">
       <div className={`lab-transport-state lab-transport-state--${connection}`} role="status">
         <i />
         {connection === "streaming" ? "Live data streaming" : connection === "connected" ? "Phone connected" : "Connecting to phone…"}
         <span>Development transport</span>
       </div>
       <ProjectileScene mode="live" compact={compact} data={primaryProjectileExperiment} />
-    </>
+    </div>
   );
 }
 

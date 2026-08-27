@@ -70,7 +70,15 @@
   color: var(--muted);
 }
 
-.dashboard__experiment .live-lab {
+.live-physics-lab-shell {
+  min-width: 0;
+}
+
+.dashboard__experiment .live-physics-lab-shell {
+  min-width: 0;
+}
+
+.dashboard__experiment .live-physics-lab-shell .live-lab {
   border: 0;
   border-left: 1px solid var(--line);
   border-radius: 0;
@@ -952,7 +960,7 @@
     grid-template-columns: 1fr;
   }
 
-  .dashboard__experiment .live-lab {
+  .dashboard__experiment .live-physics-lab-shell .live-lab {
     border-top: 1px solid var(--line);
     border-left: 0;
   }

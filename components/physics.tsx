@@ -1,4 +1,7 @@
+"use client";
+
 import { Pause, Play, RotateCcw } from "lucide-react";
+import { useEffect, useState } from "react";
 import { MetricStrip } from "./ui";
 import { primaryProjectileExperiment } from "@/lib/physics/projectile-data";
 import { PhysicsGrid } from "./physics/PhysicsGrid";
@@ -6,9 +9,11 @@ import { Projectile } from "./physics/Projectile";
 import { Trajectory as TrajectoryPath } from "./physics/Trajectory";
 import { VelocityVector } from "./physics/VelocityVector";
 
-export function Trajectory({ compact = false }: { compact?: boolean }) {
+export function Trajectory({ compact = false, frameIndex }: { compact?: boolean; frameIndex?: number }) {
   const experiment = primaryProjectileExperiment;
-  const sample = compact ? experiment.samples[experiment.samples.length - 1] : experiment.samples[2];
+  const sample = compact
+    ? experiment.samples[frameIndex ?? experiment.samples.length - 1]
+    : experiment.samples[frameIndex ?? 2];
 
   return (
     <div className="trajectory">
@@ -28,32 +33,42 @@ export function Trajectory({ compact = false }: { compact?: boolean }) {
   );
 }
 
-export function Replay({ controls = true }: { controls?: boolean }) {
+export function Replay({ controls = true, showMetrics = true }: { controls?: boolean; showMetrics?: boolean }) {
+  const [playing, setPlaying] = useState(false);
+  const [frame, setFrame] = useState(0);
+
+  useEffect(() => {
+    if (!playing) return;
+    const timer = window.setInterval(() => {
+      setFrame((value) => (value + 1) % primaryProjectileExperiment.samples.length);
+    }, 700);
+    return () => window.clearInterval(timer);
+  }, [playing]);
+
   return (
     <div className="panel">
       <p className="eyebrow">Physics replay</p>
       <h2>Your throw</h2>
-      <Trajectory compact />
+      <Trajectory compact frameIndex={frame} />
       {controls ? (
         <div className="actions">
-          <button className="button primary small" type="button">
-            <Play size={14} />
-            Replay
+          <button className="button primary small" type="button" onClick={() => setPlaying((value) => !value)}>
+            {playing ? <Pause size={14} /> : <Play size={14} />}
+            {playing ? "Pause" : "Replay"}
           </button>
-          <button className="button ghost small" type="button">
-            <Pause size={14} />
-            Pause
+          <button className="button ghost small" type="button" onClick={() => setPlaying(false)} disabled={!playing}>
+            <Pause size={14} /> Pause
           </button>
-          <button className="button ghost small" type="button">
+          <button className="button ghost small" type="button" onClick={() => { setFrame(0); setPlaying(false); }}>
             <RotateCcw size={14} />
             Reset
           </button>
           <span className="mono" style={{ marginLeft: "auto", alignSelf: "center" }}>
-            {primaryProjectileExperiment.flightTime.toFixed(2)}s
+            {primaryProjectileExperiment.samples[frame]?.time.toFixed(2)}s
           </span>
         </div>
       ) : null}
-      <MetricStrip metrics={primaryProjectileExperiment.metrics.slice(0, 3)} />
+      {showMetrics ? <MetricStrip metrics={primaryProjectileExperiment.metrics.slice(0, 3)} /> : null}
     </div>
   );
 }
