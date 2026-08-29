@@ -44,6 +44,59 @@ export default function HomePage() {
           <LivePhysicsLab compact />
         </section>
 
+        <section className="dashboard__scores">
+          <div>
+            <p className="eyebrow">Your Performance</p>
+            <h3>Physics Scores</h3>
+            <div className="score-summary">
+              <article>
+                <strong>87</strong>
+                <span>Best Score</span>
+              </article>
+              <article>
+                <strong>82</strong>
+                <span>Average Score</span>
+              </article>
+              <article>
+                <strong>92%</strong>
+                <span>Accuracy Rate</span>
+              </article>
+            </div>
+          </div>
+
+          <div className="dashboard__features">
+            <p className="eyebrow">Quick Actions</p>
+            <div className="features-grid">
+              <article className="feature-card">
+                <div className="feature-icon">🎯</div>
+                <h4>Prediction Challenge</h4>
+                <p>Predict angle, height & range before throwing</p>
+                <Button href="/app/experiments/projectile-motion" variant="ghost" small>
+                  Try Now
+                </Button>
+              </article>
+
+              <article className="feature-card">
+                <div className="feature-icon">📊</div>
+                <h4>Compare Throws</h4>
+                <p>View side-by-side analysis of your experiments</p>
+                <Button href="/app/history" variant="ghost" small>
+                  Compare
+                </Button>
+              </article>
+
+              <article className="feature-card">
+                <div className="feature-icon">📑</div>
+                <h4>Lab Report</h4>
+                <p>Download your results as a detailed report</p>
+                <Button href="/app/dashboard" variant="ghost" small>
+                  Generate
+                </Button>
+              </article>
+            </div>
+          </div>
+        </section>
+
         <section className="dashboard__lower">
           <div>
             <p className="eyebrow">Your progress</p>

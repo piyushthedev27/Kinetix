@@ -4,6 +4,13 @@ import { ArrowDown, Camera, ChartNoAxesCombined, Check, Orbit, Signal } from "lu
 import { motion, useReducedMotion } from "motion/react";
 import { Button, SectionHeading } from "./ui";
 import { DataBridge, LivePhysicsLab, PhysicsMotion } from "./kinetix-motion";
+import {
+  PredictionChallenge,
+  PhysicsScoreSection,
+  TheoryVsRealitySection,
+  ReplaySection,
+  LabReportSection,
+} from "./features";
 
 const learningSteps = [
   {
@@ -221,6 +228,16 @@ export function LandingExperience() {
           </div>
         </div>
       </section>
+
+      <PredictionChallenge />
+
+      <PhysicsScoreSection />
+
+      <TheoryVsRealitySection />
+
+      <ReplaySection />
+
+      <LabReportSection />
 
       <section className="final-field">
         <div className="container">
