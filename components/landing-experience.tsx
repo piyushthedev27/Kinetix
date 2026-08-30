@@ -1,7 +1,10 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowDown, Camera, ChartNoAxesCombined, Check, Orbit, Signal } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { Button, SectionHeading } from "./ui";
 import { DataBridge, LivePhysicsLab, PhysicsMotion } from "./kinetix-motion";
 import {
@@ -48,6 +51,161 @@ const proofCards = [
   },
 ] as const;
 
+function ScrollHeroSequence() {
+  const reduce = useReducedMotion();
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (reduce) return;
+    
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      // 1. Set initial states so they are hidden before scrubbing
+      // Trajectory path length is approx 350
+      gsap.set(".hero-trajectory", { strokeDasharray: 350, strokeDashoffset: 350 });
+      gsap.set([".hero-vel-line", ".hero-vel-head", ".hero-bounds"], { opacity: 0 });
+      gsap.set(".hero-packet", { opacity: 0, x: -20, y: -20, scale: 0.5 });
+      
+      const hudAngle = { val: 0 };
+      const hudVel = { val: 0 };
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 78px",
+          end: "bottom bottom",
+          scrub: 1,
+        }
+      });
+
+      // Phone and laptop base parallax
+      tl.to(".hero-phone", { y: 42, duration: 1 }, 0);
+      tl.fromTo(".hero-phone", { rotate: -2 }, { rotate: -4, duration: 0.5, ease: "power1.inOut" }, 0);
+      tl.to(".hero-phone", { rotate: -2, duration: 0.5, ease: "power1.inOut" }, 0.5);
+      tl.to(".hero-laptop", { x: 28, y: 18, duration: 1 }, 0);
+
+      // Internal visualization sequence
+      // 0.1 - 0.2: Bounding box fades in
+      tl.to(".hero-bounds", { opacity: 1, duration: 0.1 }, 0.1);
+      
+      // 0.2 - 0.5: Trajectory draws
+      tl.to(".hero-trajectory", { strokeDashoffset: 0, duration: 0.3 }, 0.2);
+      
+      // 0.5 - 0.6: Velocity vector appears
+      tl.to([".hero-vel-line", ".hero-vel-head"], { opacity: 1, duration: 0.1 }, 0.5);
+
+      // HUD counter sync with trajectory
+      tl.to(hudAngle, { 
+        val: 38, 
+        duration: 0.3,
+        onUpdate: () => {
+          const el = document.querySelector(".hero-hud-angle");
+          if (el) el.textContent = `${Math.round(hudAngle.val)}°`;
+        }
+      }, 0.2);
+      
+      tl.to(hudVel, { 
+        val: 5.8, 
+        duration: 0.3,
+        onUpdate: () => {
+          const el = document.querySelector(".hero-hud-vel");
+          if (el) el.textContent = `${hudVel.val.toFixed(1)} m/s`;
+        }
+      }, 0.2);
+
+      // 0.6 - 0.8: Data packet flies to laptop
+      tl.to(".hero-packet", { 
+        opacity: 1, 
+        scale: 1,
+        x: 180,
+        y: 60,
+        duration: 0.2,
+        ease: "power2.out"
+      }, 0.6);
+      tl.to(".hero-packet", { opacity: 0, duration: 0.1 }, 0.8);
+      
+      // 0.8 - 0.9: Laptop bars react
+      tl.from(".hero-laptop__bars i", { 
+        scaleY: 0.2, 
+        transformOrigin: "bottom", 
+        stagger: 0.05, 
+        duration: 0.2,
+        ease: "back.out(1.5)"
+      }, 0.8);
+
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, [reduce]);
+
+  if (reduce) {
+    return (
+      <div className="kinetic-hero__visual">
+        <div className="hero-grid" />
+        <PhysicsMotion />
+      </div>
+    );
+  }
+
+  // Final HTML fallback state is fully populated (e.g. 38°, 5.8 m/s, fully drawn trajectory)
+  // GSAP will animate *from* a hidden state when JS executes, satisfying the HTML-first rule.
+  return (
+    <div ref={containerRef} className="scroll-hero" aria-hidden="true">
+      <div className="scroll-hero__sticky">
+        <div className="hero-phone" style={{ transform: "rotate(-2deg)" }}>
+          <div className="hero-phone__frame">
+            <div className="hero-phone__speaker" />
+            <div className="hero-phone__screen">
+              <div className="hero-phone__top">
+                <span>Projectile</span>
+                <span>1/1</span>
+              </div>
+
+              <div className="hero-bounds" />
+
+              <svg viewBox="0 0 330 210" className="scroll-hero__svg" role="img" aria-label="Projectile preview">
+                <line x1="25" y1="170" x2="290" y2="170" stroke="var(--line)" strokeWidth="1" />
+                <path d="M 28 156 Q 112 80 208 110 T 282 155" fill="none" stroke="var(--lime)" strokeWidth="2.5" strokeLinecap="round" className="hero-trajectory" />
+                <circle cx="110" cy="116" r="6" fill="var(--lime)" stroke="var(--ink)" strokeWidth="2" />
+                <line x1="110" y1="116" x2="146" y2="104" stroke="var(--blue)" strokeWidth="2.5" className="hero-vel-line" />
+                <polygon points="146,104 139,101 142,110" fill="var(--blue)" className="hero-vel-head" />
+                <g>
+                  <rect x="168" y="28" width="98" height="28" rx="7" fill="rgba(23,32,42,0.92)" />
+                  <text x="179" y="48" fill="#fff" fontSize="9" fontFamily="var(--mono)" letterSpacing="0.08em">ANGLE</text>
+                  <text x="226" y="48" fill="#fff" fontSize="12" fontWeight="700" fontFamily="var(--mono)">38°</text>
+                </g>
+              </svg>
+
+              <div className="hero-hud">
+                <span>θ</span>
+                <strong className="hero-hud-angle">38°</strong>
+                <span>v</span>
+                <strong className="hero-hud-vel">5.8 m/s</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="hero-packet" />
+
+        <div className="hero-laptop">
+          <div className="hero-laptop__screen">
+            <span>trajectory</span>
+            <div className="hero-laptop__bar" />
+            <div className="hero-laptop__bars">
+              <i />
+              <i />
+              <i />
+            </div>
+          </div>
+          <div className="hero-laptop__base" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function LandingExperience() {
   const reduce = useReducedMotion();
 
@@ -61,46 +219,40 @@ export function LandingExperience() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.65 }}
           >
-            <p className="eyebrow hero-eyebrow">
-              Physics, in real life <Orbit size={14} />
-            </p>
-            <h1>
-              Don&apos;t just solve the equation. <em>Perform it.</em>
-            </h1>
-            <motion.p
-              className="summary"
-              initial={reduce ? false : { opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.18 }}
-            >
-              Throw a ball. Kinetix tracks the motion, turns it into physics, and shows you why the result happened.
-            </motion.p>
-            <motion.div
-              className="actions"
-              initial={reduce ? false : { opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.35 }}
-            >
-              <Button href="/auth/sign-up">Start experimenting</Button>
-              <Button href="#story" variant="secondary">
-                See how it works
-              </Button>
-            </motion.div>
-            <div className="hero-notes" aria-hidden="true">
-              <span>v₀ = 5.8 m/s</span>
-              <span>θ = 38°</span>
+            <div className="hero-copy-sticky">
+              <p className="eyebrow hero-eyebrow">
+                Physics, in real life <Orbit size={14} />
+              </p>
+              <h1>
+                Don&apos;t just solve the equation. <em>Perform it.</em>
+              </h1>
+              <motion.p
+                className="summary"
+                initial={reduce ? false : { opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.18 }}
+              >
+                Throw a ball. Kinetix tracks the motion, turns it into physics, and shows you why the result happened.
+              </motion.p>
+              <motion.div
+                className="actions"
+                initial={reduce ? false : { opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.35 }}
+              >
+                <Button href="/auth/sign-up">Start experimenting</Button>
+                <Button href="#story" variant="secondary">
+                  See how it works
+                </Button>
+              </motion.div>
+              <div className="hero-notes" aria-hidden="true">
+                <span>v₀ = 5.8 m/s</span>
+                <span>θ = 38°</span>
+              </div>
             </div>
           </motion.div>
 
-          <motion.div
-            className="kinetic-hero__visual"
-            initial={reduce ? false : { opacity: 0, scale: 0.97, y: 8 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.75, delay: 0.08 }}
-          >
-            <div className="hero-grid" />
-            <PhysicsMotion />
-          </motion.div>
+          <ScrollHeroSequence />
         </div>
         <a className="scroll-hint" href="#story">
           <span>Scroll to observe</span>

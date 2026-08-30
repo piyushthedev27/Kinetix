@@ -1,18 +1,43 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { Play, Pause, SkipBack } from "lucide-react";
 import { SectionHeading, Button } from "@/components/ui";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+
+function ReplayPreview() {
+  return (
+    <div className="replay-scroll-preview">
+      <svg viewBox="0 0 480 220" role="img" aria-label="Replay preview">
+        <line x1="30" y1="170" x2="450" y2="170" stroke="var(--line)" strokeWidth="1" />
+        <path d="M 40 155 Q 120 100 210 130 T 360 170" fill="none" stroke="var(--blue)" strokeWidth="2.5" strokeDasharray="5 5" />
+        <circle cx="120" cy="100" r="8" fill="var(--lime)" stroke="var(--ink)" strokeWidth="2" />
+        <circle cx="210" cy="130" r="8" fill="var(--lime)" stroke="var(--ink)" strokeWidth="2" />
+        <line x1="210" y1="130" x2="250" y2="122" stroke="var(--blue)" strokeWidth="2" />
+        <polygon points="250,122 243,119 246,128" fill="var(--blue)" />
+      </svg>
+      {/* Velocity waveform */}
+      <svg className="waveform-svg" viewBox="0 0 480 40" preserveAspectRatio="none" style={{ marginTop: '-10px', width: '100%', height: '40px', display: 'block' }} aria-hidden="true">
+        <polyline points="0,40 20,38 40,30 60,10 80,15 100,20 120,30 140,25 160,20 180,15 200,10 220,5 240,10 260,15 280,25 300,30 320,35 340,30 360,25 380,20 400,25 420,30 440,35 460,38 480,40" fill="none" stroke="var(--blue)" strokeWidth="1.5" opacity="0.4" />
+      </svg>
+    </div>
+  );
+}
 
 export function ReplaySection() {
   const reduce = useReducedMotion();
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+  const viewerY = useTransform(scrollYProgress, [0, 1], [18, -18]);
+  const comparisonY = useTransform(scrollYProgress, [0, 1], [-18, 18]);
   const [currentFrame, setCurrentFrame] = useState(30);
   const [isPlaying, setIsPlaying] = useState(false);
   const [speed, setSpeed] = useState(1);
   const totalFrames = 62;
 
-  // Playback animation loop
   useEffect(() => {
     if (!isPlaying) return;
 
@@ -40,209 +65,68 @@ export function ReplaySection() {
     }
   };
 
-  return (
-    <section className="replay-section">
-      <div className="container">
-        <SectionHeading
-          eyebrow="Interactive Playback"
-          title="Replay frame by frame."
-          description="Pause at any moment to see velocity, trajectory, and angle. Understand the physics step by step."
-        />
-
+  if (reduce) {
+    return (
+      <section className="replay-section">
+        <div className="container">
+          <SectionHeading eyebrow="Interactive Playback" title="Replay frame by frame." description="Pause at any moment to see velocity, trajectory, and angle. Understand the physics step by step." />
         <div className="replay-layout">
-          <motion.div
-            className="replay-viewer"
-            initial={reduce ? false : { opacity: 0, scale: 0.96 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, amount: 0.35 }}
-            transition={{ duration: 0.6 }}
-          >
+          <motion.div className="replay-viewer" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.6 }}>
             <div className="replay-screen">
-              <svg viewBox="0 0 480 320" role="img" aria-label="Replay visualization">
-                {/* Grid */}
-                <line x1="30" y1="240" x2="450" y2="240" stroke="var(--line)" strokeWidth="1" />
+              <ReplayPreview />
 
-                {/* Ground indicator */}
-                <rect x="30" y="240" width="420" height="50" fill="var(--lime-soft)" opacity="0.3" />
-                <text x="240" y="285" textAnchor="middle" className="replay-label">
-                  Ground reference
-                </text>
-
-                {/* Trajectory path */}
-                <motion.path
-                  d="M 60 220 Q 160 80 320 240"
-                  fill="none"
-                  stroke="var(--blue)"
-                  strokeWidth="2"
-                  strokeDasharray="5 5"
-                  opacity="0.5"
-                  initial={{ pathLength: 0 }}
-                  whileInView={{ pathLength: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1.2 }}
-                />
-
-                {/* Ball at frame 0 (initial) */}
-                <motion.g initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.8 }}>
-                  <circle cx="60" cy="220" r="8" fill="var(--lime)" stroke="var(--ink)" strokeWidth="2" />
-                  <text x="50" y="260" className="frame-label">
-                    Frame 0
-                  </text>
-                </motion.g>
-
-                {/* Ball at frame mid (apex) */}
-                <motion.g initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 1 }}>
-                  <circle cx="160" cy="80" r="8" fill="var(--lime)" stroke="var(--ink)" strokeWidth="2" />
-                  <text x="155" y="60" className="frame-label" textAnchor="middle">
-                    Apex
-                  </text>
-                  {/* Velocity arrow */}
-                  <line x1="160" y1="80" x2="200" y2="85" stroke="var(--blue)" strokeWidth="2" />
-                  <polygon points="200,85 195,82 197,90" fill="var(--blue)" />
-                </motion.g>
-
-                {/* Ball at frame end */}
-                <motion.g initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 1.2 }}>
-                  <circle cx="320" cy="240" r="8" fill="var(--lime)" stroke="var(--ink)" strokeWidth="2" />
-                  <text x="330" y="260" className="frame-label">
-                    Frame 62
-                  </text>
-                </motion.g>
-
-                {/* Angle indicator */}
-                <motion.g initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.9 }}>
-                  <line x1="60" y1="220" x2="95" y2="220" stroke="var(--orange)" strokeWidth="1.5" />
-                  <path d="M 75 220 A 15 15 0 0 0 87 197" fill="none" stroke="var(--orange)" strokeWidth="1.5" />
-                  <text x="85" y="215" className="replay-annotation">
-                    38°
-                  </text>
-                </motion.g>
-              </svg>
-
-              <div className="replay-controls" onKeyDown={handleKeyDown} role="group" aria-label="Replay controls">
-                <button
-                  className="replay-btn"
-                  onClick={() => setCurrentFrame(0)}
-                  aria-label="Skip to beginning"
-                  title="Skip to beginning"
-                >
-                  <SkipBack size={16} />
-                </button>
-                <button
-                  className={`replay-btn ${isPlaying ? "" : "play"}`}
-                  onClick={() => setIsPlaying(!isPlaying)}
-                  aria-label={isPlaying ? "Pause replay" : "Play replay"}
-                  aria-pressed={isPlaying}
-                  title="Play/Pause"
-                >
-                  {isPlaying ? <Pause size={16} /> : <Play size={16} />}
-                </button>
-
-                <div className="replay-timeline">
-                  <input
-                    type="range"
-                    className="timeline-slider"
-                    min="0"
-                    max={totalFrames}
-                    value={currentFrame}
-                    onChange={(e) => setCurrentFrame(Number(e.target.value))}
-                    aria-label="Replay timeline"
-                    aria-valuemin={0}
-                    aria-valuemax={totalFrames}
-                    aria-valuenow={currentFrame}
-                    aria-valuetext={`Frame ${currentFrame} of ${totalFrames}`}
-                  />
-                  <span className="frame-counter" aria-live="polite">
-                    {currentFrame} / {totalFrames}
-                  </span>
-                </div>
-
-                <div className="replay-speed">
-                  <label htmlFor="speed-select">Speed:</label>
-                  <select
-                    id="speed-select"
-                    value={speed}
-                    onChange={(e) => setSpeed(Number(e.target.value))}
-                    aria-label="Playback speed"
-                  >
-                    <option value={0.25}>0.25x</option>
-                    <option value={0.5}>0.5x</option>
-                    <option value={1}>1x</option>
-                    <option value={2}>2x</option>
-                  </select>
-                </div>
+              <div className="replay-controls" role="group" aria-label="Replay controls">
+                <button className="replay-btn" onClick={() => setCurrentFrame(0)} aria-label="Skip to beginning" title="Skip to beginning"><SkipBack size={16} /></button>
+                <button className={`replay-btn ${isPlaying ? "" : "play"}`} onClick={() => setIsPlaying(!isPlaying)} aria-label={isPlaying ? "Pause replay" : "Play replay"} aria-pressed={isPlaying} title="Play/Pause">{isPlaying ? <Pause size={16} /> : <Play size={16} />}</button>
+                <div className="replay-timeline"><input type="range" className="timeline-slider" min="0" max={totalFrames} value={currentFrame} onChange={(e) => setCurrentFrame(Number(e.target.value))} aria-label="Replay timeline" /><span className="frame-counter">{currentFrame} / {totalFrames}</span></div>
+                <div className="replay-speed"><label htmlFor="speed-select">Speed:</label><select id="speed-select" value={speed} onChange={(e) => setSpeed(Number(e.target.value))} aria-label="Playback speed"><option value={0.25}>0.25x</option><option value={0.5}>0.5x</option><option value={1}>1x</option><option value={2}>2x</option></select></div>
               </div>
             </div>
+          </motion.div>
+        </div>
+        </div>
+      </section>
+    );
+  }
 
-            {/* Live metrics sidebar */}
-            <motion.div
-              className="replay-metrics"
-              initial={reduce ? false : { opacity: 0, x: 12 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ delay: 0.5 }}
-            >
-              <div className="metric-box">
-                <span>Position (m)</span>
-                <strong>
-                  <small>x:</small> {(2.4 + (currentFrame / totalFrames) * 2.8).toFixed(2)} <small>y:</small> {Math.round(220 - (currentFrame / totalFrames) * 140)}
-                </strong>
+  return (
+    <section ref={sectionRef} className="replay-section">
+      <div className="container">
+        <SectionHeading eyebrow="Interactive Playback" title="Replay frame by frame." description="Pause at any moment to see velocity, trajectory, and angle. Understand the physics step by step." />
+
+        <div className="replay-layout">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.6 }}>
+            <motion.div className="replay-viewer" style={reduce ? undefined : { y: viewerY }}>
+              <div className="replay-screen">
+                <ReplayPreview />
+
+                <div className="replay-controls" onKeyDown={handleKeyDown} role="group" aria-label="Replay controls">
+                  <button className="replay-btn" onClick={() => setCurrentFrame(0)} aria-label="Skip to beginning" title="Skip to beginning"><SkipBack size={16} /></button>
+                  <button className={`replay-btn ${isPlaying ? "" : "play"}`} onClick={() => setIsPlaying(!isPlaying)} aria-label={isPlaying ? "Pause replay" : "Play replay"} aria-pressed={isPlaying} title="Play/Pause">{isPlaying ? <Pause size={16} /> : <Play size={16} />}</button>
+                  <div className="replay-timeline"><input type="range" className="timeline-slider" min="0" max={totalFrames} value={currentFrame} onChange={(e) => setCurrentFrame(Number(e.target.value))} aria-label="Replay timeline" /><span className="frame-counter">{currentFrame} / {totalFrames}</span></div>
+                  <div className="replay-speed"><label htmlFor="speed-select">Speed:</label><select id="speed-select" value={speed} onChange={(e) => setSpeed(Number(e.target.value))} aria-label="Playback speed"><option value={0.25}>0.25x</option><option value={0.5}>0.5x</option><option value={1}>1x</option><option value={2}>2x</option></select></div>
+                </div>
               </div>
-              <div className="metric-box">
-                <span>Velocity (m/s)</span>
-                <strong>{(4.2 * (1 - Math.abs(currentFrame - totalFrames / 2) / (totalFrames / 2))).toFixed(2)}</strong>
-              </div>
-              <div className="metric-box">
-                <span>Time (s)</span>
-                <strong>{(currentFrame * 0.01).toFixed(2)}</strong>
+
+              <div className="replay-metrics">
+                <div className="metric-box"><span>Position (m)</span><strong><small>x:</small> {(2.4 + (currentFrame / totalFrames) * 2.8).toFixed(2)} <small>y:</small> {Math.round(220 - (currentFrame / totalFrames) * 140)}</strong></div>
+                <div className="metric-box"><span>Velocity (m/s)</span><strong>{(4.2 * (1 - Math.abs(currentFrame - totalFrames / 2) / (totalFrames / 2))).toFixed(2)}</strong></div>
+                <div className="metric-box"><span>Time (s)</span><strong>{(currentFrame * 0.01).toFixed(2)}</strong></div>
               </div>
             </motion.div>
           </motion.div>
 
-          {/* Comparison section */}
-          <motion.div
-            className="replay-comparison"
-            initial={reduce ? false : { opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.4 }}
-            transition={{ delay: 0.3, duration: 0.65 }}
-          >
-            <h3>Side-by-Side Comparison</h3>
-            <p>Compare your predictions with actual results. Watch how angle and velocity affect the trajectory.</p>
-
-            <div className="comparison-chart">
-              <div className="chart-column">
-                <span className="chart-label">Your Prediction</span>
-                <div className="chart-bars">
-                  <div className="chart-bar" style={{ height: "85%" }}>
-                    <span>40°</span>
-                  </div>
-                </div>
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.6, delay: 0.1 }}>
+            <motion.div className="replay-comparison" style={reduce ? undefined : { y: comparisonY }}>
+              <h3>Side-by-Side Comparison</h3>
+              <p>Compare your predictions with actual results. Watch how angle and velocity affect the trajectory.</p>
+              <div className="comparison-chart">
+                <div className="chart-column"><span className="chart-label">Your Prediction</span><div className="chart-bars"><div className="chart-bar" style={{ height: "85%" }}><span>40°</span></div></div></div>
+                <div className="chart-column"><span className="chart-label">Actual Result</span><div className="chart-bars"><div className="chart-bar actual" style={{ height: "92%" }}><span>38°</span></div></div></div>
               </div>
-              <div className="chart-column">
-                <span className="chart-label">Actual Result</span>
-                <div className="chart-bars">
-                  <div className="chart-bar actual" style={{ height: "92%" }}>
-                    <span>38°</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="comparison-stats">
-              <div>
-                <span>Accuracy</span>
-                <strong>95%</strong>
-              </div>
-              <div>
-                <span>Difference</span>
-                <strong>2°</strong>
-              </div>
-            </div>
-
-            <Button href="/app/history" variant="secondary">
-              View Full Comparison
-            </Button>
+              <div className="comparison-stats"><div><span>Accuracy</span><strong>95%</strong></div><div><span>Difference</span><strong>2°</strong></div></div>
+              <Button href="/app/history" variant="secondary">View Full Comparison</Button>
+            </motion.div>
           </motion.div>
         </div>
       </div>
