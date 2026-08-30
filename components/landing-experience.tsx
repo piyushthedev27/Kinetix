@@ -415,7 +415,7 @@ export function LandingExperience() {
             <em>Your physics.</em>
           </h2>
           <p>Start with Projectile Motion and make the real world match the equation.</p>
-          <Button href="/auth/sign-up">Start your first experiment</Button>
+          <Button href={isAuthenticated ? "/dashboard" : "/auth/sign-up"}>Start your first experiment</Button>
         </div>
       </section>
     </main>

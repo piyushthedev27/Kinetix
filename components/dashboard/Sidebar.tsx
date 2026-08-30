@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Home, FlaskConical, History, User, Settings } from "lucide-react";
 import { dashboardData } from "@/lib/data";
@@ -28,7 +29,10 @@ export function Sidebar({ isOpen, onNavigate }: SidebarProps) {
   return (
     <aside className="kx-sidebar" data-open={isOpen}>
       <div className="kx-sidebar-brand">
-        <span aria-hidden>⚪</span> Kinetix
+        <Link href="/" style={{ display: "flex", alignItems: "center", gap: "8px", textDecoration: "none", color: "inherit" }}>
+          <Image src="/logo.svg" alt="" width={23} height={20} priority />
+          <span>Kinetix</span>
+        </Link>
       </div>
 
       <nav className="kx-sidebar-nav" aria-label="Dashboard navigation">

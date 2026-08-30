@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useAuth } from "@/lib/auth/AuthProvider";
-import { Loader2 } from "lucide-react"; // Or however Kinetix handles loading spinners, let's stick to simple text if we don't have lucide.
+import { LoadingMark } from "@/components/ui";
 
 export function AuthGuard({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, isLoading } = useAuth();
@@ -19,8 +19,18 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-muted">Loading session...</div>
+      <div style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight: "100vh",
+        width: "100vw",
+        position: "fixed",
+        inset: 0,
+        background: "var(--paper, #f9f9fb)",
+        zIndex: 9999
+      }}>
+        <LoadingMark label="Loading session..." />
       </div>
     );
   }
