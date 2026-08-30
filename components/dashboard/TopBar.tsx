@@ -31,18 +31,9 @@ export function TopBar({ onMenuClick }: TopBarProps) {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const { data: profile } = useAsyncData(() => dashboardData.getProfile(), []);
-
-  // `useAuth` is optional at the type level here in case it isn't wired
-  // yet in your project — guard the call so this component doesn't crash
-  // a project that hasn't added AuthProvider yet.
-  let logout: (() => void) | undefined;
-  try {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    ({ logout } = useAuth());
-  } catch {
-    logout = undefined;
-  }
+  const { user, logout } = useAuth();
+  const displayName = user?.name || (user?.email ? user.email.split("@")[0] : "");
+  const initial = displayName ? displayName.charAt(0).toUpperCase() : "?";
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -89,7 +80,7 @@ export function TopBar({ onMenuClick }: TopBarProps) {
             aria-label="Open user menu"
           >
             <div className="kx-avatar" style={{ width: 28, height: 28, fontSize: 12 }} aria-hidden>
-              {profile?.displayName?.charAt(0)?.toUpperCase() ?? "?"}
+              {initial}
             </div>
             <ChevronDown size={14} />
           </button>

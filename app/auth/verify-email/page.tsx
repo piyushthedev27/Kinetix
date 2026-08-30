@@ -50,7 +50,7 @@ function VerifyEmailForm() {
       if (isNewUser) {
         router.push("/onboarding");
       } else {
-        window.location.href = "/app";
+        router.replace("/dashboard");
       }
     } catch (err: any) {
       setError(err.message || "Invalid or expired code");

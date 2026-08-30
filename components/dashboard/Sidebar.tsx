@@ -4,8 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Home, FlaskConical, History, User, Settings } from "lucide-react";
-import { dashboardData } from "@/lib/data";
-import { useAsyncData } from "./useAsyncData";
+import { useAuth } from "@/lib/auth/AuthProvider";
 
 const NAV_ITEMS = [
   { href: "/dashboard", label: "Home", icon: Home, match: (p: string) => p === "/dashboard" },
@@ -22,9 +21,10 @@ interface SidebarProps {
 
 export function Sidebar({ isOpen, onNavigate }: SidebarProps) {
   const pathname = usePathname();
-  const { data: profile } = useAsyncData(() => dashboardData.getProfile(), []);
+  const { user } = useAuth();
 
-  const initial = profile?.displayName?.charAt(0)?.toUpperCase() ?? "?";
+  const displayName = user?.name || (user?.email ? user.email.split("@")[0] : "Learner");
+  const initial = displayName.charAt(0).toUpperCase();
 
   return (
     <aside className="kx-sidebar" data-open={isOpen}>
@@ -56,9 +56,9 @@ export function Sidebar({ isOpen, onNavigate }: SidebarProps) {
         </div>
         <div className="kx-sidebar-footer-text">
           <span className="kx-sidebar-footer-name">
-            {profile?.displayName ?? "Loading…"}
+            {displayName}
           </span>
-          <span className="kx-role-pill">{profile?.role ?? "Learner"}</span>
+          <span className="kx-role-pill">Learner</span>
         </div>
       </div>
     </aside>

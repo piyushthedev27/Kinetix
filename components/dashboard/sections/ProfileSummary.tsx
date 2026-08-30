@@ -1,15 +1,13 @@
 "use client";
 
 import { dashboardData } from "@/lib/data";
+import { useAuth } from "@/lib/auth/AuthProvider";
 import { useAsyncData } from "../useAsyncData";
 import { StatCard } from "../StatCard";
 import { CardSkeleton, StatRowSkeleton } from "../Skeletons";
 
 export function ProfileSummary() {
-  const { data: profile, isLoading: profileLoading } = useAsyncData(
-    () => dashboardData.getProfile(),
-    []
-  );
+  const { user, isLoading: authLoading } = useAuth();
   const { data: stats, isLoading: statsLoading } = useAsyncData(
     () => dashboardData.getStats(),
     []
@@ -17,20 +15,20 @@ export function ProfileSummary() {
   const { data: experiments } = useAsyncData(() => dashboardData.listExperiments(1), []);
 
   const best = experiments?.[0];
+  const displayName = user?.name || (user?.email ? user.email.split("@")[0] : "Learner");
+  const email = user?.email || "";
 
   return (
     <div>
-      {profileLoading ? (
+      {authLoading ? (
         <CardSkeleton height={140} />
       ) : (
-        profile && (
-          <div className="kx-card" style={{ marginBottom: 24 }}>
-            <h2 className="kx-page-title" style={{ marginBottom: 4 }}>
-              {profile.displayName}&rsquo;s Physics Lab
-            </h2>
-            <p className="kx-page-subtitle">{profile.email}</p>
-          </div>
-        )
+        <div className="kx-card" style={{ marginBottom: 24 }}>
+          <h2 className="kx-page-title" style={{ marginBottom: 4 }}>
+            {displayName}&rsquo;s Physics Lab
+          </h2>
+          <p className="kx-page-subtitle">{email}</p>
+        </div>
       )}
 
       {statsLoading ? (
