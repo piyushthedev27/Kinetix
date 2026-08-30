@@ -1303,8 +1303,10 @@
   height: var(--ring-size);
   margin: 0 auto 12px;
   border-radius: 50%;
-  display: grid;
-  place-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background: conic-gradient(
     var(--lime) 0deg,
     var(--lime) calc(var(--ring-value) * 3.6deg),
@@ -1329,18 +1331,16 @@
 }
 
 .score-ring strong {
-  font-size: 42px;
+  font-size: 32px;
   color: var(--ink);
   line-height: 1;
 }
 
 .score-ring span {
-  position: absolute;
-  right: 8px;
-  bottom: 8px;
-  font-size: 11px;
-  color: var(--quiet);
-  font-weight: 500;
+  font-size: 10px;
+  color: var(--muted);
+  font-weight: 600;
+  margin-top: 1px;
 }
 
 .score-label {
@@ -1592,10 +1592,15 @@
   text-transform: uppercase;
 }
 
-.replay-screen svg {
+.replay-scroll-preview svg {
   width: 100%;
   height: auto;
-  margin-bottom: 16px;
+}
+
+.replay-btn svg {
+  width: 16px;
+  height: 16px;
+  display: block;
 }
 
 .replay-label {
@@ -1635,6 +1640,7 @@
   background: var(--surface);
   color: var(--ink);
   cursor: pointer;
+  padding: 0;
   transition: all 0.2s;
 }
 
@@ -1700,9 +1706,10 @@
 }
 
 .replay-metrics {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 12px;
+  margin-top: 16px;
 }
 
 .metric-box {

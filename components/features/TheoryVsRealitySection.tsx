@@ -38,10 +38,10 @@ export function TheoryVsRealitySection() {
             </motion.div>
 
             <div className="theory-explanation">
-              <div className="explanation-item"><span className="explanation-icon orange">①</span><div><h3>Air resistance</h3><p>Slows the ball slightly, reducing range by 2-4%. More noticeable at higher speeds.</p></div></div>
-              <div className="explanation-item"><span className="explanation-icon blue">②</span><div><h3>Camera angle</h3><p>Our phone is calibrated, but perspective can add ±1° to angle measurements in edge cases.</p></div></div>
-              <div className="explanation-item"><span className="explanation-icon green">③</span><div><h3>Calibration</h3><p>We match real-world distance using markers. Accuracy within ±0.15 m for distances under 8 m.</p></div></div>
-              <div className="explanation-item"><span className="explanation-icon lime">④</span><div><h3>Your throw</h3><p>Release point, spin, and hand motion affect results. Consistent form improves measurement accuracy.</p></div></div>
+              <div className="explanation-item"><span className="explanation-icon orange">1</span><div><h3>Air resistance</h3><p>Slows the ball slightly, reducing range by 2-4%. More noticeable at higher speeds.</p></div></div>
+              <div className="explanation-item"><span className="explanation-icon blue">2</span><div><h3>Camera angle</h3><p>Our phone is calibrated, but perspective can add ±1° to angle measurements in edge cases.</p></div></div>
+              <div className="explanation-item"><span className="explanation-icon green">3</span><div><h3>Calibration</h3><p>We match real-world distance using markers. Accuracy within ±0.15 m for distances under 8 m.</p></div></div>
+              <div className="explanation-item"><span className="explanation-icon lime">4</span><div><h3>Your throw</h3><p>Release point, spin, and hand motion affect results. Consistent form improves measurement accuracy.</p></div></div>
             </div>
           </div>
         </div>
@@ -120,10 +120,10 @@ export function TheoryVsRealitySection() {
           </motion.div>
 
           <motion.div className="theory-explanation" initial={{ opacity: 1, x: 0 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.2 }}>
-            <div className="explanation-item"><span className="explanation-icon orange">①</span><div><h3>Air resistance</h3><p>Slows the ball slightly, reducing range by 2-4%. More noticeable at higher speeds.</p></div></div>
-            <div className="explanation-item"><span className="explanation-icon blue">②</span><div><h3>Camera angle</h3><p>Our phone is calibrated, but perspective can add ±1° to angle measurements in edge cases.</p></div></div>
-            <div className="explanation-item"><span className="explanation-icon green">③</span><div><h3>Calibration</h3><p>We match real-world distance using markers. Accuracy within ±0.15 m for distances under 8 m.</p></div></div>
-            <div className="explanation-item"><span className="explanation-icon lime">④</span><div><h3>Your throw</h3><p>Release point, spin, and hand motion affect results. Consistent form improves measurement accuracy.</p></div></div>
+            <div className="explanation-item"><span className="explanation-icon orange">1</span><div><h3>Air resistance</h3><p>Slows the ball slightly, reducing range by 2-4%. More noticeable at higher speeds.</p></div></div>
+            <div className="explanation-item"><span className="explanation-icon blue">2</span><div><h3>Camera angle</h3><p>Our phone is calibrated, but perspective can add ±1° to angle measurements in edge cases.</p></div></div>
+            <div className="explanation-item"><span className="explanation-icon green">3</span><div><h3>Calibration</h3><p>We match real-world distance using markers. Accuracy within ±0.15 m for distances under 8 m.</p></div></div>
+            <div className="explanation-item"><span className="explanation-icon lime">4</span><div><h3>Your throw</h3><p>Release point, spin, and hand motion affect results. Consistent form improves measurement accuracy.</p></div></div>
           </motion.div>
         </div>
       </div>

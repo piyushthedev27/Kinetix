@@ -1,6 +1,5 @@
 "use client";
 
-import { AppShell } from "@/components/layout";
 import { useAuth } from "@/lib/auth/AuthProvider";
 import { Button } from "@/components/ui";
 
@@ -8,8 +7,7 @@ export default function SettingsPage() {
   const { user, logout } = useAuth();
 
   return (
-    <AppShell current="Settings">
-      <div className="app-content settings-page">
+    <div className="app-content settings-page">
         <header>
           <p className="eyebrow">Settings</p>
           <h1 className="page-title">Tune your Lab.</h1>
@@ -58,8 +56,7 @@ export default function SettingsPage() {
             </div>
           </article>
         </section>
-      </div>
-    </AppShell>
+    </div>
   );
 }
 

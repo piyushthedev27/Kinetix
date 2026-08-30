@@ -1,11 +1,9 @@
-import { AppShell } from "@/components/layout";
 import { PhysicsMotion } from "@/components/kinetix-motion";
 import { Button } from "@/components/ui";
 
 export default function ExperimentsPage() {
   return (
-    <AppShell current="Experiments">
-      <div className="app-content library">
+    <div className="app-content library">
         <header>
           <p className="eyebrow">Experiment library</p>
           <h1 className="page-title">Learning starts in motion.</h1>
@@ -54,7 +52,6 @@ export default function ExperimentsPage() {
             <b>Planned next</b>
           </article>
         </section>
-      </div>
-    </AppShell>
+    </div>
   );
 }

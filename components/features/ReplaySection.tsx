@@ -109,9 +109,27 @@ export function ReplaySection() {
               </div>
 
               <div className="replay-metrics">
-                <div className="metric-box"><span>Position (m)</span><strong><small>x:</small> {(2.4 + (currentFrame / totalFrames) * 2.8).toFixed(2)} <small>y:</small> {Math.round(220 - (currentFrame / totalFrames) * 140)}</strong></div>
-                <div className="metric-box"><span>Velocity (m/s)</span><strong>{(4.2 * (1 - Math.abs(currentFrame - totalFrames / 2) / (totalFrames / 2))).toFixed(2)}</strong></div>
-                <div className="metric-box"><span>Time (s)</span><strong>{(currentFrame * 0.01).toFixed(2)}</strong></div>
+                <div className="metric-box" style={{ borderLeft: "3px solid var(--blue)" }}>
+                  <span>Position (m)</span>
+                  <strong>
+                    X: {(2.4 + (currentFrame / totalFrames) * 2.8).toFixed(2)}m · Y: {((220 - (currentFrame / totalFrames) * 140) / 100).toFixed(2)}m
+                  </strong>
+                  <p style={{ margin: "4px 0 0", fontSize: "11px", color: "var(--muted)" }}>Horizontal range vs altitude</p>
+                </div>
+                <div className="metric-box" style={{ borderLeft: "3px solid var(--lime)" }}>
+                  <span>Velocity (m/s)</span>
+                  <strong>{(3.8 + 2.0 * Math.sin((currentFrame / totalFrames) * Math.PI)).toFixed(2)} m/s</strong>
+                  <p style={{ margin: "4px 0 0", fontSize: "11px", color: "var(--muted)" }}>
+                    {currentFrame < totalFrames * 0.4 ? "Ascending · Decelerating" : currentFrame < totalFrames * 0.6 ? "Apex · Transiting" : "Descending · Accelerating"}
+                  </p>
+                </div>
+                <div className="metric-box" style={{ borderLeft: "3px solid var(--orange)" }}>
+                  <span>Time (s)</span>
+                  <strong>{(currentFrame * 0.03).toFixed(2)}s</strong>
+                  <p style={{ margin: "4px 0 0", fontSize: "11px", color: "var(--muted)" }}>
+                    Frame {currentFrame} of {totalFrames} ({Math.round((currentFrame / totalFrames) * 100)}%)
+                  </p>
+                </div>
               </div>
             </motion.div>
           </motion.div>

@@ -1,52 +1,17 @@
-"use client";
+import { ProfileSummary } from "@/components/dashboard/sections/ProfileSummary";
 
-import { AppShell } from "@/components/layout";
-import { PhysicsMotion } from "@/components/kinetix-motion";
-import { Button } from "@/components/ui";
-import { useAuth } from "@/lib/auth/AuthProvider";
-
-export default function ProfilePage() {
-  const { user } = useAuth();
-  const displayName = user?.email ? user.email.split('@')[0] : "Student";
-  const capitalizedName = displayName.charAt(0).toUpperCase() + displayName.slice(1);
-
+export default function DashboardProfilePage() {
   return (
-    <AppShell current="Profile">
-      <div className="app-content profile-page">
-        <header>
-          <p className="eyebrow">Your profile</p>
-          <h1 className="page-title">{capitalizedName}&apos;s Physics Lab</h1>
-          <p className="intro">A record of real attempts, visible improvements, and the next motion to test.</p>
-        </header>
-
-        <section className="profile-hero">
-          <div>
-            <span className="eyebrow">Projectile Motion</span>
-            <h2>Your best throw is getting closer.</h2>
-            <p>43° · 6.0 m/s · 5.8 m range</p>
-            <Button href="/app/history/kx-2408-017" variant="secondary">
-              Replay best attempt
-            </Button>
-          </div>
-          <PhysicsMotion />
-        </section>
-
-        <div className="profile-stats">
-          <article>
-            <strong>4</strong>
-            <span>Experiments completed</span>
-          </article>
-          <article>
-            <strong>5.8 <small>m</small></strong>
-            <span>Best range</span>
-          </article>
-          <article>
-            <strong>43°</strong>
-            <span>Closest launch angle</span>
-          </article>
-        </div>
+    <div>
+      <div className="kx-page-header">
+        <p className="kx-page-eyebrow">Your Profile</p>
+        <h1 className="kx-page-title">A record of real attempts.</h1>
+        <p className="kx-page-subtitle">
+          Visible improvements, and the next motion to test.
+        </p>
       </div>
-    </AppShell>
+
+      <ProfileSummary />
+    </div>
   );
 }
-

@@ -1,4 +1,3 @@
-import { AppShell } from "@/components/layout";
 import { Button, MetricStrip } from "@/components/ui";
 import { Replay } from "@/components/physics";
 import { experimentMetrics } from "@/lib/mock-data";
@@ -6,8 +5,7 @@ import { primaryProjectileExperiment } from "@/lib/physics/projectile-data";
 
 export default function HistoryDetailPage() {
   return (
-    <AppShell current="History">
-      <div className="app-content">
+    <div className="app-content">
         <p className="eyebrow">
           Projectile Motion · {primaryProjectileExperiment.dateLabel}
         </p>
@@ -24,7 +22,6 @@ export default function HistoryDetailPage() {
         </div>
 
         <MetricStrip metrics={experimentMetrics} />
-      </div>
-    </AppShell>
+    </div>
   );
 }

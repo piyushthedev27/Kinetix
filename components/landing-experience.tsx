@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowDown, Camera, ChartNoAxesCombined, Check, Orbit, Signal } from "lucide-react";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { Button, SectionHeading } from "./ui";
+import { useAuth } from "@/lib/auth/AuthProvider";
 import { DataBridge, LivePhysicsLab, PhysicsMotion } from "./kinetix-motion";
 import {
   PredictionChallenge,
@@ -216,6 +217,7 @@ function ScrollHeroSequence() {
 
 export function LandingExperience() {
   const reduce = useReducedMotion();
+  const { isAuthenticated } = useAuth();
 
   return (
     <main id="content">
@@ -248,7 +250,7 @@ export function LandingExperience() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.35 }}
               >
-                <Button href="/auth/sign-up">Start experimenting</Button>
+                <Button href={isAuthenticated ? "/dashboard" : "/auth/sign-up"}>Start experimenting</Button>
                 <Button href="#story" variant="secondary">
                   See how it works
                 </Button>

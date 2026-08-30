@@ -1,7 +1,12 @@
+"use client";
+
 import { Footer, MarketingHeader } from "@/components/layout";
 import { Button, SectionHeading } from "@/components/ui";
+import { useAuth } from "@/lib/auth/AuthProvider";
 
 export default function HowItWorksPage() {
+  const { isAuthenticated } = useAuth();
+
   return (
     <>
       <MarketingHeader />
@@ -31,7 +36,7 @@ export default function HowItWorksPage() {
         </div>
 
         <div className="actions">
-          <Button href="/auth/sign-up">Start experimenting</Button>
+          <Button href={isAuthenticated ? "/dashboard" : "/auth/sign-up"}>Start experimenting</Button>
         </div>
       </main>
       <Footer />

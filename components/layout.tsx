@@ -13,7 +13,7 @@ const links = [
 ] as const;
 
 export function MarketingHeader() {
-  const { isAuthenticated, user, logout } = useAuth();
+  const { isAuthenticated } = useAuth();
 
   return (
     <header className="site-header">
@@ -24,16 +24,9 @@ export function MarketingHeader() {
           <Link href="#experiments">Experiments</Link>
         </nav>
         {isAuthenticated ? (
-          <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
-            <span style={{ fontSize: "0.875rem", fontWeight: 500 }}>{user?.email}</span>
-            <button 
-              className="button small ghost" 
-              onClick={logout}
-              style={{ padding: "0.25rem 0.75rem" }}
-            >
-              Log out
-            </button>
-          </div>
+          <Link className="button primary small" href="/dashboard">
+            Go to Dashboard
+          </Link>
         ) : (
           <Link className="button primary small" href="/auth/sign-up">
             Start experimenting

@@ -1,11 +1,9 @@
-import { AppShell } from "@/components/layout";
 import { Button, SectionHeading } from "@/components/ui";
 import { Replay } from "@/components/physics";
 
 export default function ExperimentDetailPage() {
   return (
-    <AppShell current="Experiments">
-      <div className="app-content">
+    <div className="app-content">
         <SectionHeading
           eyebrow="Experiments / Projectile Motion"
           title="Projectile Motion"
@@ -32,7 +30,6 @@ export default function ExperimentDetailPage() {
         <div style={{ marginTop: 28 }}>
           <Replay controls showMetrics />
         </div>
-      </div>
-    </AppShell>
+    </div>
   );
 }

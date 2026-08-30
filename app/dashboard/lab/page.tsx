@@ -1,11 +1,9 @@
-import { AppShell } from "@/components/layout";
 import { LivePhysicsLab } from "@/components/kinetix-motion";
 import { Button } from "@/components/ui";
 
 export default function LabPage() {
   return (
-    <AppShell current="Experiments">
-      <div className="app-content lab-page">
+    <div className="app-content lab-page">
         <header className="lab-page__intro">
           <div>
             <p className="eyebrow">Live experiment</p>
@@ -28,8 +26,7 @@ export default function LabPage() {
             Compare with theory
           </Button>
         </section>
-      </div>
-    </AppShell>
+    </div>
   );
 }
 
