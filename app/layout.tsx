@@ -7,6 +7,15 @@ import "./styles/pages.css";
 export const metadata: Metadata = {
   title: "Kinetix - Physics You Can See",
   description: "Turn a real throw into a physics lesson.",
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+    shortcut: ["/favicon.svg"],
+    apple: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
