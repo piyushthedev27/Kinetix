@@ -1,6 +1,12 @@
+"use client";
+
 import { AppShell } from "@/components/layout";
+import { useAuth } from "@/lib/auth/AuthProvider";
+import { Button } from "@/components/ui";
 
 export default function SettingsPage() {
+  const { user, logout } = useAuth();
+
   return (
     <AppShell current="Settings">
       <div className="app-content settings-page">
@@ -38,10 +44,18 @@ export default function SettingsPage() {
             <span className="settings-index">03</span>
             <h2>Account</h2>
             <div className="setting-row">
-              <span>Experiment saving</span>
-              <b>Prototype data</b>
+              <span>Email</span>
+              <b>{user?.email || "Not signed in"}</b>
             </div>
-            <p>Connection, account, and saved-result systems will be wired to the production service in the next phase.</p>
+            <div className="setting-row">
+              <span>Authentication</span>
+              <b className="setting-on">Wired (Real Backend)</b>
+            </div>
+            <div style={{ marginTop: "1rem" }}>
+              <Button onClick={logout} variant="secondary" small>
+                Log out
+              </Button>
+            </div>
           </article>
         </section>
       </div>

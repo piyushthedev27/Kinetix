@@ -1,14 +1,21 @@
+"use client";
+
 import { AppShell } from "@/components/layout";
 import { PhysicsMotion } from "@/components/kinetix-motion";
 import { Button } from "@/components/ui";
+import { useAuth } from "@/lib/auth/AuthProvider";
 
 export default function ProfilePage() {
+  const { user } = useAuth();
+  const displayName = user?.email ? user.email.split('@')[0] : "Student";
+  const capitalizedName = displayName.charAt(0).toUpperCase() + displayName.slice(1);
+
   return (
     <AppShell current="Profile">
       <div className="app-content profile-page">
         <header>
           <p className="eyebrow">Your profile</p>
-          <h1 className="page-title">Alex&apos;s Physics Lab</h1>
+          <h1 className="page-title">{capitalizedName}&apos;s Physics Lab</h1>
           <p className="intro">A record of real attempts, visible improvements, and the next motion to test.</p>
         </header>
 

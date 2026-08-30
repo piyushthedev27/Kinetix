@@ -1,9 +1,12 @@
 import { getToken } from "./session";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL;
+const API_BASE =
+  process.env.NEXT_PUBLIC_API_URL || "https://backend-one-nu-39.vercel.app";
 
-if (!API_BASE) {
-  console.warn("NEXT_PUBLIC_API_URL is not defined in environment variables");
+if (!process.env.NEXT_PUBLIC_API_URL) {
+  console.warn(
+    "NEXT_PUBLIC_API_URL is not defined in environment variables, using fallback: " + API_BASE
+  );
 }
 
 async function fetchApi(endpoint: string, options: RequestInit = {}) {
