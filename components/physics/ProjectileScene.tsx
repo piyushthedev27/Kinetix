@@ -156,7 +156,10 @@ export function ProjectileScene({
         <header className="live-lab__header">
           <div>
             <p className="eyebrow">Physics lab</p>
-            <h2>{data.title}</h2>
+            <div className="live-lab__title-row">
+              <h2>{data.title}</h2>
+              <span className="experiment-tag">Experiment 1 of 4</span>
+            </div>
           </div>
           <span className="live-status">
             <Signal size={14} />

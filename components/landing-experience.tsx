@@ -13,6 +13,7 @@ import {
   TheoryVsRealitySection,
   ReplaySection,
   LabReportSection,
+  RoadmapSection,
 } from "./features";
 
 const learningSteps = [
@@ -66,6 +67,7 @@ function ScrollHeroSequence() {
       gsap.set(".hero-trajectory", { strokeDasharray: 350, strokeDashoffset: 350 });
       gsap.set([".hero-vel-line", ".hero-vel-head", ".hero-bounds"], { opacity: 0 });
       gsap.set(".hero-packet", { opacity: 0, x: -20, y: -20, scale: 0.5 });
+      gsap.set(".hero-laptop", { opacity: 0, x: 60, y: 30 });
       
       const hudAngle = { val: 0 };
       const hudVel = { val: 0 };
@@ -79,11 +81,10 @@ function ScrollHeroSequence() {
         }
       });
 
-      // Phone and laptop base parallax
+      // Phone base parallax
       tl.to(".hero-phone", { y: 42, duration: 1 }, 0);
       tl.fromTo(".hero-phone", { rotate: -2 }, { rotate: -4, duration: 0.5, ease: "power1.inOut" }, 0);
       tl.to(".hero-phone", { rotate: -2, duration: 0.5, ease: "power1.inOut" }, 0.5);
-      tl.to(".hero-laptop", { x: 28, y: 18, duration: 1 }, 0);
 
       // Internal visualization sequence
       // 0.1 - 0.2: Bounding box fades in
@@ -125,14 +126,21 @@ function ScrollHeroSequence() {
       }, 0.6);
       tl.to(".hero-packet", { opacity: 0, duration: 0.1 }, 0.8);
       
-      // 0.8 - 0.9: Laptop bars react
+      // 0.8 - 0.95: Laptop slides in and bars react
+      tl.to(".hero-laptop", {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        duration: 0.15,
+        ease: "power2.out"
+      }, 0.8);
       tl.from(".hero-laptop__bars i", { 
-        scaleY: 0.2, 
+        scaleY: 0, 
         transformOrigin: "bottom", 
         stagger: 0.05, 
-        duration: 0.2,
+        duration: 0.15,
         ease: "back.out(1.5)"
-      }, 0.8);
+      }, 0.85);
 
     }, containerRef);
 
@@ -245,6 +253,9 @@ export function LandingExperience() {
                   See how it works
                 </Button>
               </motion.div>
+              <p className="hero-subnote">
+                Starting with projectile motion — more experiments on the way.
+              </p>
               <div className="hero-notes" aria-hidden="true">
                 <span>v₀ = 5.8 m/s</span>
                 <span>θ = 38°</span>
@@ -380,6 +391,8 @@ export function LandingExperience() {
           </div>
         </div>
       </section>
+
+      <RoadmapSection />
 
       <PredictionChallenge />
 

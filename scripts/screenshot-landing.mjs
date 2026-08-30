@@ -17,17 +17,19 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_DIR = resolve(__dirname, '..', 'screenshots');
 
 const SECTIONS = [
-  { name: '01-hero-top',          scroll: 0,    wait: 1500 },
-  { name: '02-hero-mid-scroll',   scroll: 800,  wait: 2000 },
-  { name: '03-hero-bottom',       scroll: 1600, wait: 2000 },
-  { name: '04-story-section',     scroll: 2400, wait: 2000 },
-  { name: '05-bridge-section',    scroll: 3200, wait: 2000 },
-  { name: '06-prediction',        scroll: 4000, wait: 2000 },
-  { name: '07-score-rings',       scroll: 4800, wait: 2500 },
-  { name: '08-theory-reality',    scroll: 5600, wait: 2500 },
-  { name: '09-replay',            scroll: 6400, wait: 2000 },
-  { name: '10-lab-report',        scroll: 7200, wait: 2000 },
-  { name: '11-final-cta',         scroll: 8400, wait: 1500 },
+  { name: '01-hero-top',          selector: '.kinetic-hero',             wait: 1500 },
+  { name: '02-hero-mid-scroll',   scroll: 800,                           wait: 2000 },
+  { name: '03-hero-bottom',       scroll: 1600,                          wait: 2000 },
+  { name: '04-story-section',     selector: '#story',                    wait: 2000 },
+  { name: '05-bridge-section',    selector: '.bridge-section',           wait: 2000 },
+  { name: '06-insight-section',   selector: '.insight-section',          wait: 2000 },
+  { name: '07-roadmap-experiments', selector: '#experiments',           wait: 2000 },
+  { name: '08-prediction',        selector: '.prediction-section',       wait: 2000 },
+  { name: '09-score-rings',       selector: '.physics-score-section',    wait: 2500 },
+  { name: '10-theory-reality',    selector: '.theory-reality-section',   wait: 2500 },
+  { name: '11-replay',            selector: '.replay-section',           wait: 2000 },
+  { name: '12-lab-report',        selector: '.lab-report-section',       wait: 2000 },
+  { name: '13-final-cta',         selector: '.final-field',              wait: 1500 },
 ];
 
 const URL = process.argv[2] || 'http://localhost:3000';
@@ -114,14 +116,23 @@ function findSystemBrowser() {
   console.log(`Capturing ${SECTIONS.length} sections...\n`);
 
   for (const section of SECTIONS) {
-    await page.evaluate((y) => window.scrollTo({ top: y, behavior: 'instant' }), section.scroll);
-    await new Promise(r => setTimeout(r, 300));
+    if (section.selector) {
+      await page.evaluate((sel) => {
+        const el = document.querySelector(sel);
+        if (el) {
+          el.scrollIntoView({ behavior: 'instant', block: 'start' });
+        }
+      }, section.selector);
+    } else {
+      await page.evaluate((y) => window.scrollTo({ top: y, behavior: 'instant' }), section.scroll);
+    }
+    await new Promise(r => setTimeout(r, 400));
     await new Promise(r => setTimeout(r, section.wait));
     await waitForAnimationsIdle(page, 2000);
 
     const path = resolve(OUT_DIR, `${section.name}.png`);
     await page.screenshot({ path, fullPage: false });
-    console.log(`  Done: ${section.name}.png  (scroll: ${section.scroll}px)`);
+    console.log(`  Done: ${section.name}.png`);
   }
 
   console.log('\nCapturing full-page screenshot...');

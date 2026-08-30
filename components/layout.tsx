@@ -15,8 +15,8 @@ export function MarketingHeader() {
       <div className="container">
         <Brand />
         <nav className="site-nav" aria-label="Main navigation">
-          <Link href="#how">How it works</Link>
-          <Link href="/app/experiments">Experiments</Link>
+          <Link href="#story">How it works</Link>
+          <Link href="#experiments">Experiments</Link>
         </nav>
         <Link className="button primary small" href="/auth/sign-up">
           Start experimenting
