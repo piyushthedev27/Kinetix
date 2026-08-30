@@ -6,3 +6,4 @@ start.err
 Docs/
 Design-system/
 screenshots/
+.env.local

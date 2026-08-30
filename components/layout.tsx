@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { Brand } from "./ui";
+import { useAuth } from "@/lib/auth/AuthProvider";
 
 const links = [
   ["Home", "/app"],
@@ -10,6 +13,8 @@ const links = [
 ] as const;
 
 export function MarketingHeader() {
+  const { isAuthenticated, user, logout } = useAuth();
+
   return (
     <header className="site-header">
       <div className="container">
@@ -18,9 +23,22 @@ export function MarketingHeader() {
           <Link href="#story">How it works</Link>
           <Link href="#experiments">Experiments</Link>
         </nav>
-        <Link className="button primary small" href="/auth/sign-up">
-          Start experimenting
-        </Link>
+        {isAuthenticated ? (
+          <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+            <span style={{ fontSize: "0.875rem", fontWeight: 500 }}>{user?.email}</span>
+            <button 
+              className="button small ghost" 
+              onClick={logout}
+              style={{ padding: "0.25rem 0.75rem" }}
+            >
+              Log out
+            </button>
+          </div>
+        ) : (
+          <Link className="button primary small" href="/auth/sign-up">
+            Start experimenting
+          </Link>
+        )}
       </div>
     </header>
   );
@@ -44,6 +62,8 @@ export function AppShell({
   children: React.ReactNode;
   current?: string;
 }) {
+  const { user } = useAuth();
+
   return (
     <div className="app-shell">
       <aside className="sidebar">
@@ -61,9 +81,9 @@ export function AppShell({
           ))}
         </nav>
         <div className="sidebar-foot">
-          Alex <strong>· Learner</strong>
+          {user?.email?.split('@')[0] || 'Student'} <strong>· Learner</strong>
           <br />
-          <span className="mono">KX-STUDENT-01</span>
+          <span className="mono">KX-{user?.id?.slice(0, 8).toUpperCase() || 'STUDENT'}</span>
         </div>
       </aside>
       <main className="app-main">

@@ -249,7 +249,7 @@
 
 .hero-laptop__bars {
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   gap: 8px;
   height: 52px;
   margin-top: 14px;
