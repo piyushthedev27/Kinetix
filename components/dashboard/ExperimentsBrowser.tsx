@@ -5,8 +5,12 @@ import Link from "next/link";
 import { Search, ChevronRight } from "lucide-react";
 import { PHYSICS_TOPICS } from "@/lib/data/physics-topics";
 
-export function ExperimentsBrowser() {
-  const [query, setQuery] = useState("");
+interface ExperimentsBrowserProps {
+  initialQuery?: string;
+}
+
+export function ExperimentsBrowser({ initialQuery }: ExperimentsBrowserProps) {
+  const [query, setQuery] = useState(initialQuery ?? "");
 
   const filteredGroups = useMemo(() => {
     const q = query.trim().toLowerCase();

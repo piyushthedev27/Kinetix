@@ -1,6 +1,8 @@
 import { ExperimentsBrowser } from "@/components/dashboard/ExperimentsBrowser";
 
-export default function ExperimentsPage() {
+export default async function ExperimentsPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
+  const { q } = await searchParams;
+
   return (
     <div className="app-content library">
       <div className="kx-experiments-header">
@@ -22,7 +24,7 @@ export default function ExperimentsPage() {
         </div>
       </div>
 
-      <ExperimentsBrowser />
+      <ExperimentsBrowser initialQuery={q} />
     </div>
   );
 }

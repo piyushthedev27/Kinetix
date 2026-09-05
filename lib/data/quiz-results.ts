@@ -51,3 +51,7 @@ export function getBestScore(topicId: string): QuizResult | null {
 export function clearQuizResults() {
   writeAll([]);
 }
+
+export function getCompletedQuizCount(): number {
+  return new Set(readAll().map((r) => r.topicId)).size;
+}

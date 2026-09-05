@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Menu, ChevronDown, User, Settings, LogOut } from "lucide-react";
+import { Menu, ChevronDown, User, Settings, LogOut, Search } from "lucide-react";
 import { dashboardData } from "@/lib/data";
 import { useAsyncData } from "./useAsyncData";
 // If your project's auth hook lives somewhere else, update this import —
@@ -34,6 +34,14 @@ export function TopBar({ onMenuClick }: TopBarProps) {
   const { user, logout } = useAuth();
   const displayName = user?.name || (user?.email ? user.email.split("@")[0] : "");
   const initial = displayName ? displayName.charAt(0).toUpperCase() : "?";
+  const isHome = pathname === "/dashboard";
+  const [searchValue, setSearchValue] = useState("");
+
+  function handleSearchSubmit(e: FormEvent) {
+    e.preventDefault();
+    const q = searchValue.trim();
+    router.push(q ? `/dashboard/experiments?q=${encodeURIComponent(q)}` : "/dashboard/experiments");
+  }
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -62,7 +70,20 @@ export function TopBar({ onMenuClick }: TopBarProps) {
         >
           <Menu size={20} />
         </button>
-        <span className="kx-topbar-title">{getPageTitle(pathname)}</span>
+        {isHome ? (
+          <form className="kx-topbar-search" onSubmit={handleSearchSubmit} role="search">
+            <Search size={16} aria-hidden />
+            <input
+              type="search"
+              placeholder="Search experiments, topics or concepts…"
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+              aria-label="Search experiments"
+            />
+          </form>
+        ) : (
+          <span className="kx-topbar-title">{getPageTitle(pathname)}</span>
+        )}
       </div>
 
       <div className="kx-topbar-right">
