@@ -1,12 +1,13 @@
 import { ExperimentPageShell } from "@/components/dashboard/experiment/ExperimentPageShell";
 import { SoundInterferenceSandbox } from "@/components/dashboard/sandbox/SoundInterferenceSandbox";
+import { SoundInterferenceSandbox3D } from "@/components/dashboard/sandbox/SoundInterferenceSandbox3D";
 
 export default function SoundInterferencePage() {
   return (
     <ExperimentPageShell
       topicId="sound-9"
       slug="sound-interference"
-      grade="Class 9"
+      grade="Quantitative Physics"
       eyebrow="Sound"
       title="Two sounds can add up — or cancel out."
       subtitle="Shift the phase between two identical sound sources and predict whether the result gets louder or quieter."
@@ -17,6 +18,7 @@ export default function SoundInterferencePage() {
         "What does 'phase' mean for a wave?",
         "Where is sound interference used in real life?",
       ]}
+      sandbox3d={<SoundInterferenceSandbox3D />}
     >
       <SoundInterferenceSandbox />
     </ExperimentPageShell>

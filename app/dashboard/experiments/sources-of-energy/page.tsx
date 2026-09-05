@@ -1,12 +1,13 @@
 import { ExperimentPageShell } from "@/components/dashboard/experiment/ExperimentPageShell";
 import { SourcesOfEnergySandbox } from "@/components/dashboard/sandbox/SourcesOfEnergySandbox";
+import { SourcesOfEnergySandbox3D } from "@/components/dashboard/sandbox/SourcesOfEnergySandbox3D";
 
 export default function SourcesOfEnergyPage() {
   return (
     <ExperimentPageShell
       topicId="sources-of-energy"
       slug="sources-of-energy"
-      grade="Class 10"
+      grade="Advanced Physics"
       eyebrow="Sources of Energy"
       title="Renewable or not?"
       subtitle="Sort each energy source, then check which ones nature replenishes — and which ones we're using up."
@@ -17,6 +18,7 @@ export default function SourcesOfEnergyPage() {
         "What are some examples of renewable energy sources?",
         "Why does it matter whether an energy source is renewable?",
       ]}
+      sandbox3d={<SourcesOfEnergySandbox3D />}
     >
       <SourcesOfEnergySandbox />
     </ExperimentPageShell>

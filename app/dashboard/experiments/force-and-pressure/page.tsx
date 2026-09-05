@@ -1,12 +1,13 @@
 import { ExperimentPageShell } from "@/components/dashboard/experiment/ExperimentPageShell";
 import { ForceAndPressureSandbox } from "@/components/dashboard/sandbox/ForceAndPressureSandbox";
+import { ForceAndPressureSandbox3D } from "@/components/dashboard/sandbox/ForceAndPressureSandbox3D";
 
 export default function ForceAndPressurePage() {
   return (
     <ExperimentPageShell
       topicId="force-and-pressure"
       slug="force-and-pressure"
-      grade="Class 8"
+      grade="Applied Physics"
       eyebrow="Force and Pressure"
       title="Same force, different area, very different result."
       subtitle="Pick a shape and a force, then watch how much it sinks in — pressure is force spread over an area."
@@ -17,6 +18,7 @@ export default function ForceAndPressurePage() {
         "Why do knives have thin blades?",
         "How is this related to why snowshoes work?",
       ]}
+      sandbox3d={<ForceAndPressureSandbox3D />}
     >
       <ForceAndPressureSandbox />
     </ExperimentPageShell>

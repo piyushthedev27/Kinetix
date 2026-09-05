@@ -1,12 +1,13 @@
 import { ExperimentPageShell } from "@/components/dashboard/experiment/ExperimentPageShell";
 import { ShadowsSandbox } from "@/components/dashboard/sandbox/ShadowsSandbox";
+import { ShadowsSandbox3D } from "@/components/dashboard/sandbox/ShadowsSandbox3D";
 
 export default function ShadowsPage() {
   return (
     <ExperimentPageShell
       topicId="light-shadows-reflections"
       slug="shadows"
-      grade="Class 6"
+      grade="Foundation Physics"
       eyebrow="Light, Shadows and Reflections"
       title="Move the light. Watch the shadow change."
       subtitle="Predict what happens when the light rises, then check the shadow's length for yourself."
@@ -17,6 +18,7 @@ export default function ShadowsPage() {
         "Would the shadow disappear if the light were directly overhead?",
         "How is this related to reflection?",
       ]}
+      sandbox3d={<ShadowsSandbox3D />}
     >
       <ShadowsSandbox />
     </ExperimentPageShell>

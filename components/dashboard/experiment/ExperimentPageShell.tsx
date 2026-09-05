@@ -18,6 +18,8 @@ interface ExperimentPageShellProps {
   chatSummary: string;
   suggestedQuestions: string[];
   children: ReactNode;
+  /** Optional 3D counterpart shown when the 3D tab is selected. Falls back to a "coming soon" notice until every experiment has one. */
+  sandbox3d?: ReactNode;
 }
 
 export function ExperimentPageShell({
@@ -30,6 +32,7 @@ export function ExperimentPageShell({
   chatSummary,
   suggestedQuestions,
   children,
+  sandbox3d,
 }: ExperimentPageShellProps) {
   const [view, setView] = useState<"2d" | "3d">("2d");
 
@@ -66,6 +69,8 @@ export function ExperimentPageShell({
         <div className="kx-experiment-main">
           {view === "2d" ? (
             children
+          ) : sandbox3d ? (
+            sandbox3d
           ) : (
             <div className="kx-sandbox" style={{ display: "grid", placeItems: "center", minHeight: 320 }}>
               <p style={{ color: "var(--muted, #56616d)", fontSize: 14 }}>3D view is coming soon — try the 2D experiment for now.</p>

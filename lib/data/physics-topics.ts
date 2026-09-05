@@ -42,7 +42,7 @@ export interface GradeGroup {
 
 export const PHYSICS_TOPICS: GradeGroup[] = [
   {
-    grade: "Class 6",
+    grade: "Foundation Physics",
     description: "Build your understanding of the physical world.",
     topics: [
       { id: "motion-measurement", title: "Motion and Measurement of Distances", description: "Push it, measure it, and read the result on a ruler.", icon: Footprints, slug: "motion-measurement" },
@@ -52,7 +52,7 @@ export const PHYSICS_TOPICS: GradeGroup[] = [
     ],
   },
   {
-    grade: "Class 7",
+    grade: "Exploring Physics",
     description: "Go deeper into motion, heat, and electricity.",
     topics: [
       { id: "motion-and-time", title: "Motion and Time", description: "Race two objects and see how speed decides the winner.", icon: Timer, slug: "motion-and-time" },
@@ -62,7 +62,7 @@ export const PHYSICS_TOPICS: GradeGroup[] = [
     ],
   },
   {
-    grade: "Class 8",
+    grade: "Applied Physics",
     description: "Explore forces, waves, and everyday phenomena.",
     topics: [
       { id: "force-and-pressure", title: "Force and Pressure", description: "Same force, different area — feel the difference in pressure.", icon: Weight, slug: "force-and-pressure" },
@@ -74,7 +74,7 @@ export const PHYSICS_TOPICS: GradeGroup[] = [
     ],
   },
   {
-    grade: "Class 9",
+    grade: "Quantitative Physics",
     description: "Quantify motion, energy, and the forces behind them.",
     topics: [
       { id: "motion", title: "Motion", description: "Watch distance-time and speed-time graphs draw themselves.", icon: LineChart, slug: "motion-graphs" },
@@ -85,7 +85,7 @@ export const PHYSICS_TOPICS: GradeGroup[] = [
     ],
   },
   {
-    grade: "Class 10",
+    grade: "Advanced Physics",
     description: "Master optics, electricity, and magnetism.",
     topics: [
       { id: "light-reflection-refraction", title: "Light — Reflection and Refraction", description: "Watch a ray of light bend as it enters water or glass.", icon: Sparkles, slug: "refraction" },

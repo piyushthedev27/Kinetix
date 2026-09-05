@@ -1,12 +1,13 @@
 import { ExperimentPageShell } from "@/components/dashboard/experiment/ExperimentPageShell";
 import { LightReflectionSandbox } from "@/components/dashboard/sandbox/LightReflectionSandbox";
+import { LightReflectionSandbox3D } from "@/components/dashboard/sandbox/LightReflectionSandbox3D";
 
 export default function LightReflectionPage() {
   return (
     <ExperimentPageShell
       topicId="light-7"
       slug="light-reflection"
-      grade="Class 7"
+      grade="Exploring Physics"
       eyebrow="Light"
       title="Light bounces off a mirror at a matching angle."
       subtitle="Set the angle the light arrives at, predict how it leaves, then reveal the reflected ray."
@@ -17,6 +18,7 @@ export default function LightReflectionPage() {
         "What's the difference between reflection and refraction?",
         "Where do we see reflection in daily life?",
       ]}
+      sandbox3d={<LightReflectionSandbox3D />}
     >
       <LightReflectionSandbox />
     </ExperimentPageShell>

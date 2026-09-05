@@ -1,12 +1,13 @@
 import { ExperimentPageShell } from "@/components/dashboard/experiment/ExperimentPageShell";
 import { MotionGraphSandbox } from "@/components/dashboard/sandbox/MotionGraphSandbox";
+import { MotionGraphSandbox3D } from "@/components/dashboard/sandbox/MotionGraphSandbox3D";
 
 export default function MotionGraphsPage() {
   return (
     <ExperimentPageShell
       topicId="motion"
       slug="motion-graphs"
-      grade="Class 9"
+      grade="Quantitative Physics"
       eyebrow="Motion"
       title="The graph is the story of the motion."
       subtitle="Launch the object and watch its distance-time and speed-time graphs draw themselves in real time."
@@ -17,6 +18,7 @@ export default function MotionGraphsPage() {
         "What does a flat line on the speed-time graph mean?",
         "How can I read acceleration from a speed-time graph?",
       ]}
+      sandbox3d={<MotionGraphSandbox3D />}
     >
       <MotionGraphSandbox />
     </ExperimentPageShell>

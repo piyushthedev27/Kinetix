@@ -1,12 +1,13 @@
 import { ExperimentPageShell } from "@/components/dashboard/experiment/ExperimentPageShell";
 import { MotionMeasurementSandbox } from "@/components/dashboard/sandbox/MotionMeasurementSandbox";
+import { MotionMeasurementSandbox3D } from "@/components/dashboard/sandbox/MotionMeasurementSandbox3D";
 
 export default function MotionMeasurementPage() {
   return (
     <ExperimentPageShell
       topicId="motion-measurement"
       slug="motion-measurement"
-      grade="Class 6"
+      grade="Foundation Physics"
       eyebrow="Motion and Measurement of Distances"
       title="Push it. Watch it move. Read the ruler."
       subtitle="Click the object or press Start to apply a force. When it comes to rest, read the ruler to measure how far it travelled."
@@ -17,6 +18,7 @@ export default function MotionMeasurementPage() {
         "What is friction?",
         "How is distance calculated?",
       ]}
+      sandbox3d={<MotionMeasurementSandbox3D />}
     >
       <MotionMeasurementSandbox />
     </ExperimentPageShell>

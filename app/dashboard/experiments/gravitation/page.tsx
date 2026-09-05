@@ -1,12 +1,13 @@
 import { ExperimentPageShell } from "@/components/dashboard/experiment/ExperimentPageShell";
 import { GravitationSandbox } from "@/components/dashboard/sandbox/GravitationSandbox";
+import { GravitationSandbox3D } from "@/components/dashboard/sandbox/GravitationSandbox3D";
 
 export default function GravitationPage() {
   return (
     <ExperimentPageShell
       topicId="gravitation"
       slug="gravitation"
-      grade="Class 9"
+      grade="Quantitative Physics"
       eyebrow="Gravitation"
       title="Does a heavier object really fall faster?"
       subtitle="Predict what happens, drop a ball and a feather together, then toggle air resistance and watch the answer change."
@@ -17,6 +18,7 @@ export default function GravitationPage() {
         "Why does air resistance slow the feather down more than the ball?",
         "What is g and why is it the same for all objects?",
       ]}
+      sandbox3d={<GravitationSandbox3D />}
     >
       <GravitationSandbox />
     </ExperimentPageShell>

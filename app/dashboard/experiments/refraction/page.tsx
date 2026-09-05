@@ -1,12 +1,13 @@
 import { ExperimentPageShell } from "@/components/dashboard/experiment/ExperimentPageShell";
 import { RefractionSandbox } from "@/components/dashboard/sandbox/RefractionSandbox";
+import { RefractionSandbox3D } from "@/components/dashboard/sandbox/RefractionSandbox3D";
 
 export default function RefractionPage() {
   return (
     <ExperimentPageShell
       topicId="light-reflection-refraction"
       slug="refraction"
-      grade="Class 10"
+      grade="Advanced Physics"
       eyebrow="Light — Reflection and Refraction"
       title="Light bends when it changes speed."
       subtitle="Set the angle and the medium, predict which way it bends, then reveal the refracted ray."
@@ -17,6 +18,7 @@ export default function RefractionPage() {
         "Why does a straw look bent in a glass of water?",
         "What is total internal reflection?",
       ]}
+      sandbox3d={<RefractionSandbox3D />}
     >
       <RefractionSandbox />
     </ExperimentPageShell>

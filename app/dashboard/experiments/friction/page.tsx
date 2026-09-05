@@ -1,12 +1,13 @@
 import { ExperimentPageShell } from "@/components/dashboard/experiment/ExperimentPageShell";
 import { FrictionSandbox } from "@/components/dashboard/sandbox/FrictionSandbox";
+import { FrictionSandbox3D } from "@/components/dashboard/sandbox/FrictionSandbox3D";
 
 export default function FrictionPage() {
   return (
     <ExperimentPageShell
       topicId="friction"
       slug="friction"
-      grade="Class 8"
+      grade="Applied Physics"
       eyebrow="Friction"
       title="Same push, different surfaces."
       subtitle="Pick a surface, set a force, predict where it stops — then see how much the surface changes the answer."
@@ -17,6 +18,7 @@ export default function FrictionPage() {
         "Does friction depend on how hard I push?",
         "Where do we see friction in everyday life?",
       ]}
+      sandbox3d={<FrictionSandbox3D />}
     >
       <FrictionSandbox />
     </ExperimentPageShell>

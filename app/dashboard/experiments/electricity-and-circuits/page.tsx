@@ -1,12 +1,13 @@
 import { ExperimentPageShell } from "@/components/dashboard/experiment/ExperimentPageShell";
 import { ElectricityAndCircuitsSandbox } from "@/components/dashboard/sandbox/ElectricityAndCircuitsSandbox";
+import { ElectricityAndCircuitsSandbox3D } from "@/components/dashboard/sandbox/ElectricityAndCircuitsSandbox3D";
 
 export default function ElectricityAndCircuitsPage() {
   return (
     <ExperimentPageShell
       topicId="electricity-circuits"
       slug="electricity-and-circuits"
-      grade="Class 6"
+      grade="Foundation Physics"
       eyebrow="Electricity and Circuits"
       title="A bulb only lights up in a complete loop."
       subtitle="Open the switch, break the wire, add more cells — predict what happens to the bulb before you check."
@@ -17,6 +18,7 @@ export default function ElectricityAndCircuitsPage() {
         "Why does adding more cells make the bulb brighter?",
         "What is a complete circuit?",
       ]}
+      sandbox3d={<ElectricityAndCircuitsSandbox3D />}
     >
       <ElectricityAndCircuitsSandbox />
     </ExperimentPageShell>

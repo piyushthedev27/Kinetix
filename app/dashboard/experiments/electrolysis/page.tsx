@@ -1,12 +1,13 @@
 import { ExperimentPageShell } from "@/components/dashboard/experiment/ExperimentPageShell";
 import { ElectrolysisSandbox } from "@/components/dashboard/sandbox/ElectrolysisSandbox";
+import { ElectrolysisSandbox3D } from "@/components/dashboard/sandbox/ElectrolysisSandbox3D";
 
 export default function ElectrolysisPage() {
   return (
     <ExperimentPageShell
       topicId="chemical-effects-electric-current"
       slug="electrolysis"
-      grade="Class 8"
+      grade="Applied Physics"
       eyebrow="Chemical Effects of Electric Current"
       title="Current can trigger a chemical reaction."
       subtitle="Turn up the voltage and watch bubbles form faster at each electrode."
@@ -17,6 +18,7 @@ export default function ElectrolysisPage() {
         "Why does raising the voltage speed up the reaction?",
         "What is happening chemically at each electrode?",
       ]}
+      sandbox3d={<ElectrolysisSandbox3D />}
     >
       <ElectrolysisSandbox />
     </ExperimentPageShell>

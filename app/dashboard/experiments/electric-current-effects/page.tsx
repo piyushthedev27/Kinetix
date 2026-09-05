@@ -1,12 +1,13 @@
 import { ExperimentPageShell } from "@/components/dashboard/experiment/ExperimentPageShell";
 import { ElectricEffectsSandbox } from "@/components/dashboard/sandbox/ElectricEffectsSandbox";
+import { ElectricEffectsSandbox3D } from "@/components/dashboard/sandbox/ElectricEffectsSandbox3D";
 
 export default function ElectricCurrentEffectsPage() {
   return (
     <ExperimentPageShell
       topicId="electric-current-effects"
       slug="electric-current-effects"
-      grade="Class 7"
+      grade="Exploring Physics"
       eyebrow="Electric Current and its Effects"
       title="One current, three effects."
       subtitle="Turn up the current and watch it heat a coil, deflect a compass, and light a bulb — all at once."
@@ -17,6 +18,7 @@ export default function ElectricCurrentEffectsPage() {
         "Why does the bulb get brighter with more current?",
         "Are these three effects related to each other?",
       ]}
+      sandbox3d={<ElectricEffectsSandbox3D />}
     >
       <ElectricEffectsSandbox />
     </ExperimentPageShell>

@@ -1,12 +1,13 @@
 import { ExperimentPageShell } from "@/components/dashboard/experiment/ExperimentPageShell";
 import { HeatSandbox } from "@/components/dashboard/sandbox/HeatSandbox";
+import { HeatSandbox3D } from "@/components/dashboard/sandbox/HeatSandbox3D";
 
 export default function HeatPage() {
   return (
     <ExperimentPageShell
       topicId="heat"
       slug="heat"
-      grade="Class 7"
+      grade="Exploring Physics"
       eyebrow="Heat"
       title="Heat is particles moving faster."
       subtitle="Turn up the temperature and watch a tidy solid shake loose into a liquid, then a gas."
@@ -17,6 +18,7 @@ export default function HeatPage() {
         "Is there a difference between heat and temperature?",
         "Why do gases spread out more than liquids?",
       ]}
+      sandbox3d={<HeatSandbox3D />}
     >
       <HeatSandbox />
     </ExperimentPageShell>

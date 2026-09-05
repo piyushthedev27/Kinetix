@@ -1,12 +1,13 @@
 import { ExperimentPageShell } from "@/components/dashboard/experiment/ExperimentPageShell";
 import { HumanEyeSandbox } from "@/components/dashboard/sandbox/HumanEyeSandbox";
+import { HumanEyeSandbox3D } from "@/components/dashboard/sandbox/HumanEyeSandbox3D";
 
 export default function HumanEyePage() {
   return (
     <ExperimentPageShell
       topicId="human-eye-colourful-world"
       slug="human-eye"
-      grade="Class 10"
+      grade="Advanced Physics"
       eyebrow="The Human Eye and the Colourful World"
       title="A lens problem your glasses solve."
       subtitle="Correct a short-sighted or long-sighted eye by dialing in the right lens power — or split white light into a spectrum."
@@ -17,6 +18,7 @@ export default function HumanEyePage() {
         "Why does a prism split white light into colors?",
         "What is the order of colors in the visible spectrum?",
       ]}
+      sandbox3d={<HumanEyeSandbox3D />}
     >
       <HumanEyeSandbox />
     </ExperimentPageShell>

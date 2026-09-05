@@ -1,12 +1,13 @@
 import { ExperimentPageShell } from "@/components/dashboard/experiment/ExperimentPageShell";
 import { CurvedMirrorSandbox } from "@/components/dashboard/sandbox/CurvedMirrorSandbox";
+import { CurvedMirrorSandbox3D } from "@/components/dashboard/sandbox/CurvedMirrorSandbox3D";
 
 export default function CurvedMirrorsPage() {
   return (
     <ExperimentPageShell
       topicId="light-8"
       slug="curved-mirrors"
-      grade="Class 8"
+      grade="Applied Physics"
       eyebrow="Light"
       title="Curved mirrors bend the rules."
       subtitle="Move the object, switch between concave and convex, and see whether the image is real or virtual, upright or flipped."
@@ -17,6 +18,7 @@ export default function CurvedMirrorsPage() {
         "What is a real image versus a virtual image?",
         "Where are curved mirrors used in real life?",
       ]}
+      sandbox3d={<CurvedMirrorSandbox3D />}
     >
       <CurvedMirrorSandbox />
     </ExperimentPageShell>
