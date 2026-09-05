@@ -1082,6 +1082,113 @@
   opacity: 0.6;
 }
 
+/* ---------- Quiz ---------- */
+
+.kx-quiz {
+  background: var(--surface, #ffffff);
+  border: 1px solid var(--line, #dde2de);
+  border-radius: var(--r-lg, 14px);
+  padding: 24px;
+  max-width: 640px;
+}
+
+.kx-quiz-progress {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted, #56616d);
+  margin: 0 0 10px;
+}
+
+.kx-quiz-question {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--ink, #17202a);
+  margin: 0 0 18px;
+  line-height: 1.4;
+}
+
+.kx-quiz-options {
+  display: grid;
+  gap: 10px;
+}
+
+.kx-quiz-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  text-align: left;
+  background: var(--surface-2, #f1f3f0);
+  border: 1.5px solid var(--line, #dde2de);
+  border-radius: var(--r-md, 10px);
+  padding: 12px 14px;
+  font-size: 14px;
+  color: var(--ink, #17202a);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.kx-quiz-option:hover:not(:disabled) {
+  border-color: var(--lime-dark, #9ccb25);
+}
+
+.kx-quiz-option[data-selected="true"] {
+  border-color: var(--ink, #17202a);
+  background: var(--surface, #ffffff);
+}
+
+.kx-quiz-option[data-correct="true"] {
+  border-color: var(--green, #3baa70);
+  background: var(--green-soft, #e7f6ed);
+  color: var(--green, #3baa70);
+  font-weight: 600;
+}
+
+.kx-quiz-option[data-wrong="true"] {
+  border-color: var(--red, #e35d5d);
+  background: #fbeaea;
+  color: var(--red, #e35d5d);
+  font-weight: 600;
+}
+
+.kx-quiz-option:disabled {
+  cursor: default;
+}
+
+.kx-quiz-explanation {
+  margin: 16px 0 0;
+  padding: 12px 14px;
+  border-radius: var(--r-md, 10px);
+  background: var(--surface-2, #f1f3f0);
+  color: var(--muted, #56616d);
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+.kx-quiz-result {
+  text-align: center;
+  padding: 40px 24px;
+}
+
+.kx-quiz-result-score {
+  font-size: 40px;
+  font-weight: 800;
+  color: var(--ink, #17202a);
+  margin: 0 0 8px;
+}
+
+.kx-quiz-result-feedback {
+  color: var(--muted, #56616d);
+  font-size: 15px;
+  margin: 0 0 20px;
+}
+
+.kx-quiz-result .kx-sandbox-actions {
+  justify-content: center;
+}
+
 .kx-sandbox3d-wrap {
   position: relative;
   width: 100%;

@@ -3,12 +3,13 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Home, FlaskConical, History, User, Settings } from "lucide-react";
+import { Home, FlaskConical, ListChecks, History, User, Settings } from "lucide-react";
 import { useAuth } from "@/lib/auth/AuthProvider";
 
 const NAV_ITEMS = [
   { href: "/dashboard", label: "Home", icon: Home, match: (p: string) => p === "/dashboard" },
   { href: "/dashboard/experiments", label: "Experiments", icon: FlaskConical, match: (p: string) => p.startsWith("/dashboard/experiments") },
+  { href: "/dashboard/quiz", label: "Quiz", icon: ListChecks, match: (p: string) => p.startsWith("/dashboard/quiz") },
   { href: "/dashboard/history", label: "History", icon: History, match: (p: string) => p.startsWith("/dashboard/history") },
   { href: "/dashboard/profile", label: "Profile", icon: User, match: (p: string) => p.startsWith("/dashboard/profile") },
   { href: "/dashboard/settings", label: "Settings", icon: Settings, match: (p: string) => p.startsWith("/dashboard/settings") },

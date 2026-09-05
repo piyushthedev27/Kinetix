@@ -96,3 +96,11 @@ export const PHYSICS_TOPICS: GradeGroup[] = [
     ],
   },
 ];
+
+export function findTopicBySlug(slug: string): { topic: PhysicsTopic; group: GradeGroup } | null {
+  for (const group of PHYSICS_TOPICS) {
+    const topic = group.topics.find((t) => t.slug === slug);
+    if (topic) return { topic, group };
+  }
+  return null;
+}

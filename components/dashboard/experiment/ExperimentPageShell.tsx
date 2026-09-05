@@ -77,9 +77,12 @@ export function ExperimentPageShell({
             </div>
           )}
 
-          <div style={{ marginTop: 20 }}>
+          <div style={{ marginTop: 20, display: "flex", gap: 10 }}>
             <Link href="/dashboard/experiments" className="kx-btn kx-btn-secondary">
               Back to topics
+            </Link>
+            <Link href={`/dashboard/quiz/${slug}`} className="kx-btn kx-btn-primary">
+              Test your understanding
             </Link>
           </div>
         </div>
