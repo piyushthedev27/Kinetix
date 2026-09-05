@@ -1,6 +1,4 @@
-import Link from "next/link";
-import { ChevronRight } from "lucide-react";
-import { PHYSICS_TOPICS } from "@/lib/data/physics-topics";
+import { ExperimentsBrowser } from "@/components/dashboard/ExperimentsBrowser";
 
 export default function ExperimentsPage() {
   return (
@@ -24,43 +22,7 @@ export default function ExperimentsPage() {
         </div>
       </div>
 
-      {PHYSICS_TOPICS.map((group) => (
-        <div key={group.grade} className="kx-topic-section">
-          <h2 className="kx-topic-section-title">{group.grade}</h2>
-          <p className="kx-topic-section-desc">{group.description}</p>
-          <div className="kx-topic-list">
-            {group.topics.map((topic) => {
-              const Icon = topic.icon;
-              const card = (
-                <>
-                  <div className="kx-topic-icon">
-                    <Icon aria-hidden />
-                  </div>
-                  <div className="kx-topic-body">
-                    <p className="kx-topic-title">{topic.title}</p>
-                    <p className="kx-topic-desc">{topic.description}</p>
-                  </div>
-                  <span className="kx-topic-pill" data-ready={Boolean(topic.slug)}>
-                    <span className="kx-topic-pill-dot" aria-hidden />
-                    {topic.slug ? "Ready" : "Coming soon"}
-                  </span>
-                  {topic.slug && <ChevronRight className="kx-topic-chevron" size={18} aria-hidden />}
-                </>
-              );
-
-              return topic.slug ? (
-                <Link key={topic.id} href={`/dashboard/experiments/${topic.slug}`} className="kx-topic-card" data-available="true">
-                  {card}
-                </Link>
-              ) : (
-                <div key={topic.id} className="kx-topic-card" data-available="false">
-                  {card}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      ))}
+      <ExperimentsBrowser />
     </div>
   );
 }
