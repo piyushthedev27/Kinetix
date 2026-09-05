@@ -1,57 +1,42 @@
-import { PhysicsMotion } from "@/components/kinetix-motion";
-import { Button } from "@/components/ui";
+import Link from "next/link";
+import { PHYSICS_TOPICS } from "@/lib/data/physics-topics";
 
 export default function ExperimentsPage() {
   return (
     <div className="app-content library">
-        <header>
-          <p className="eyebrow">Experiment library</p>
-          <h1 className="page-title">Learning starts in motion.</h1>
-          <p className="intro">One complete experiment. A real camera, a real throw, and a visible equation.</p>
-        </header>
+      <div className="kx-page-header">
+        <p className="kx-page-eyebrow">Physics Concepts, Grades 6–10 (NCERT/CBSE)</p>
+        <h1 className="kx-page-title">Pick a topic to experiment with.</h1>
+        <p className="kx-page-subtitle">
+          Select a topic below to open its sandbox. Topics without a sandbox yet are marked coming soon.
+        </p>
+      </div>
 
-        <section className="library-feature">
-          <div>
-            <p className="eyebrow">01 · Available now</p>
-            <h2>
-              Projectile
-              <br />
-              <em>Motion</em>
-            </h2>
-            <p>
-              Throw a ball. Kinetix detects the path and turns it into angle, velocity, height, range, and a learning moment.
-            </p>
-            <div className="actions">
-              <Button href="/app/experiments/projectile-motion">Explore experiment</Button>
-              <span className="mono">≈ 2 MIN · CAMERA</span>
-            </div>
+      {PHYSICS_TOPICS.map((group) => (
+        <div key={group.grade} className="kx-topic-grade">
+          <h2 className="kx-section-title">{group.grade}</h2>
+          <div className="kx-topic-list">
+            {group.topics.map((topic) =>
+              topic.slug ? (
+                <Link
+                  key={topic.id}
+                  href={`/dashboard/experiments/${topic.slug}`}
+                  className="kx-topic-item"
+                  data-available="true"
+                >
+                  <span>{topic.title}</span>
+                  <span className="tag live">Ready</span>
+                </Link>
+              ) : (
+                <div key={topic.id} className="kx-topic-item" data-available="false">
+                  <span>{topic.title}</span>
+                  <span className="tag">Coming soon</span>
+                </div>
+              )
+            )}
           </div>
-
-          <div className="library-feature__visual">
-            <PhysicsMotion />
-          </div>
-        </section>
-
-        <section className="library-next">
-          <div>
-            <p className="eyebrow">Next experiments</p>
-            <h2>More ways to test the equation.</h2>
-          </div>
-
-          <article>
-            <span>02</span>
-            <h3>Pendulum Motion</h3>
-            <p>See a real swing become period and energy.</p>
-            <b>Planned next</b>
-          </article>
-
-          <article>
-            <span>03</span>
-            <h3>Free Fall</h3>
-            <p>Measure a drop and make gravity visible.</p>
-            <b>Planned next</b>
-          </article>
-        </section>
+        </div>
+      ))}
     </div>
   );
 }

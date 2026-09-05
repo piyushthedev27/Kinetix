@@ -585,6 +585,212 @@
   margin: 0 auto 20px;
 }
 
+/* ---------- Topic list (experiment library) ---------- */
+
+.kx-topic-grade {
+  margin-top: 28px;
+}
+
+.kx-topic-grade:first-of-type {
+  margin-top: 8px;
+}
+
+.kx-topic-list {
+  display: grid;
+  gap: 8px;
+}
+
+.kx-topic-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: var(--surface, #ffffff);
+  border: 1px solid var(--line, #dde2de);
+  border-radius: var(--r-md, 10px);
+  padding: 14px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink, #17202a);
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.kx-topic-item[data-available="true"] {
+  cursor: pointer;
+}
+
+.kx-topic-item[data-available="true"]:hover {
+  border-color: var(--lime-dark, #9ccb25);
+  background: var(--lime-soft, #eff8d4);
+}
+
+.kx-topic-item[data-available="false"] {
+  color: var(--quiet, #8b96a3);
+  background: var(--surface-2, #f1f3f0);
+}
+
+/* ---------- Sandbox ---------- */
+
+.kx-sandbox {
+  background: var(--surface, #ffffff);
+  border: 1px solid var(--line, #dde2de);
+  border-radius: var(--r-lg, 14px);
+  padding: 24px;
+}
+
+.kx-sandbox-setup {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 18px;
+}
+
+@media (max-width: 640px) {
+  .kx-sandbox-setup {
+    grid-template-columns: 1fr;
+  }
+}
+
+.kx-sandbox-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.kx-sandbox-field label {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink, #17202a);
+}
+
+.kx-sandbox-field input[type="range"] {
+  width: 100%;
+  accent-color: var(--lime-dark, #9ccb25);
+}
+
+.kx-sandbox-field input[type="range"]:disabled {
+  opacity: 0.5;
+}
+
+.kx-sandbox-chip-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.kx-sandbox-chip {
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line, #dde2de);
+  background: var(--surface, #ffffff);
+  color: var(--muted, #56616d);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.kx-sandbox-chip:hover {
+  border-color: var(--lime-dark, #9ccb25);
+}
+
+.kx-sandbox-chip[data-active="true"] {
+  background: var(--lime, #b7e33a);
+  border-color: var(--lime-dark, #9ccb25);
+  color: var(--ink, #17202a);
+}
+
+.kx-sandbox-chip:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.kx-sandbox-canvas-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: var(--r-md, 10px);
+  background: var(--surface-2, #f1f3f0);
+}
+
+.kx-sandbox-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 640px;
+  cursor: pointer;
+}
+
+.kx-sandbox-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.kx-sandbox-log {
+  margin-top: 16px;
+  padding: 14px 16px;
+  border: 1px solid var(--line, #dde2de);
+  border-radius: var(--r-md, 10px);
+  background: var(--ink, #17202a);
+  color: #d7f27a;
+  font-family: var(--mono, "SFMono-Regular", Consolas, monospace);
+  font-size: 13px;
+  min-height: 20px;
+}
+
+.kx-sandbox-log-line {
+  padding: 2px 0;
+}
+
+.kx-sandbox-log-line::before {
+  content: "> ";
+  opacity: 0.6;
+}
+
+/* ---------- Source-of-energy cards ---------- */
+
+.kx-sandbox-source-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.kx-sandbox-source-card {
+  border: 1px solid var(--line, #dde2de);
+  border-radius: var(--r-md, 10px);
+  padding: 14px;
+  background: var(--surface, #ffffff);
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.kx-sandbox-source-card[data-result="correct"] {
+  border-color: var(--green, #3baa70);
+  background: var(--green-soft, #e7f6ed);
+}
+
+.kx-sandbox-source-card[data-result="incorrect"] {
+  border-color: var(--red, #e35d5d);
+  background: #fdeeee;
+}
+
+.kx-sandbox-source-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink, #17202a);
+  margin-bottom: 8px;
+}
+
+.kx-sandbox-source-fact {
+  margin: 10px 0 0;
+  font-size: 12px;
+  color: var(--muted, #56616d);
+  line-height: 1.4;
+}
+
 /* ---------- Responsive stat/experiment tweaks ---------- */
 
 @media (max-width: 640px) {

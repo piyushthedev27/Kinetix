@@ -15,6 +15,7 @@
     "@types/react-dom": "^19.1.2",
     "gsap": "^3.15.0",
     "lucide-react": "^0.511.0",
+    "matter-js": "^0.20.0",
     "motion": "^13.1.1",
     "next": "^15.3.2",
     "react": "^19.1.0",
@@ -24,6 +25,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.26.0",
+    "@types/matter-js": "^0.20.2",
     "eslint": "^9.27.0",
     "eslint-config-next": "^15.3.2"
   }
