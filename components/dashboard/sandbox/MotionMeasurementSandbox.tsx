@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Matter from "matter-js";
+import { ArrowRight, Waves, Flag, Clock, ChevronDown, Maximize2 } from "lucide-react";
 
 const UNIT_PX = 48;
 const RULER_UNITS = 12;
@@ -30,9 +31,11 @@ function feedbackFor(diff: number) {
 }
 
 type Phase = "idle" | "running" | "done";
+type Speed = 0.5 | 1 | 2;
 
 export function MotionMeasurementSandbox() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const wrapRef = useRef<HTMLDivElement | null>(null);
   const objectRef = useRef<Matter.Body | null>(null);
   const engineRef = useRef<Matter.Engine | null>(null);
   const runnerRef = useRef<Matter.Runner | null>(null);
@@ -41,11 +44,22 @@ export function MotionMeasurementSandbox() {
   const predictionRef = useRef(6);
   const ghostsRef = useRef<number[]>([]);
   const peakSpeedRef = useRef(0);
+  const showRulerRef = useRef(true);
+  const showValuesRef = useRef(true);
+  const launchTimeRef = useRef(0);
+  const elapsedRef = useRef(0);
 
   const [force, setForce] = useState(6);
   const [prediction, setPrediction] = useState(6);
   const [phase, setPhase] = useState<Phase>("idle");
   const [log, setLog] = useState<string[]>(["Ready"]);
+  const [speed, setSpeed] = useState<Speed>(1);
+  const [speedMenuOpen, setSpeedMenuOpen] = useState(false);
+  const [showRuler, setShowRuler] = useState(true);
+  const [showValues, setShowValues] = useState(true);
+  const [logOpen, setLogOpen] = useState(true);
+  const [finalPosition, setFinalPosition] = useState<number | null>(null);
+  const [timeTaken, setTimeTaken] = useState<number | null>(null);
 
   useEffect(() => {
     forceRef.current = force;
@@ -54,6 +68,18 @@ export function MotionMeasurementSandbox() {
   useEffect(() => {
     predictionRef.current = prediction;
   }, [prediction]);
+
+  useEffect(() => {
+    showRulerRef.current = showRuler;
+  }, [showRuler]);
+
+  useEffect(() => {
+    showValuesRef.current = showValues;
+  }, [showValues]);
+
+  useEffect(() => {
+    if (engineRef.current) engineRef.current.timing.timeScale = speed;
+  }, [speed]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -89,19 +115,21 @@ export function MotionMeasurementSandbox() {
       ctx.stroke();
 
       // Ruler ticks + labels
-      ctx.font = "11px Inter, ui-sans-serif, system-ui, sans-serif";
-      ctx.textAlign = "center";
-      for (let u = 0; u <= RULER_UNITS; u++) {
-        const x = pxForUnit(u);
-        const tall = u % 2 === 0;
-        ctx.strokeStyle = tall ? "#8b96a3" : "#c8d0ca";
-        ctx.beginPath();
-        ctx.moveTo(x, TRACK_Y);
-        ctx.lineTo(x, TRACK_Y + (tall ? 14 : 8));
-        ctx.stroke();
-        if (tall) {
-          ctx.fillStyle = "#56616d";
-          ctx.fillText(String(u), x, TRACK_Y + 28);
+      if (showRulerRef.current) {
+        ctx.font = "11px Inter, ui-sans-serif, system-ui, sans-serif";
+        ctx.textAlign = "center";
+        for (let u = 0; u <= RULER_UNITS; u++) {
+          const x = pxForUnit(u);
+          const tall = u % 2 === 0;
+          ctx.strokeStyle = tall ? "#8b96a3" : "#c8d0ca";
+          ctx.beginPath();
+          ctx.moveTo(x, TRACK_Y);
+          ctx.lineTo(x, TRACK_Y + (tall ? 14 : 8));
+          ctx.stroke();
+          if (tall) {
+            ctx.fillStyle = "#56616d";
+            ctx.fillText(String(u), x, TRACK_Y + 28);
+          }
         }
       }
 
@@ -135,12 +163,12 @@ export function MotionMeasurementSandbox() {
       const object = objectRef.current;
       if (object) {
         const { x, y } = object.position;
-        const speed = object.speed;
-        peakSpeedRef.current = Math.max(peakSpeedRef.current, speed);
+        const speedVal = object.speed;
+        peakSpeedRef.current = Math.max(peakSpeedRef.current, speedVal);
 
         // Force arrow while moving
-        if (movingRef.current && speed > 0.05) {
-          const arrowLen = Math.min(90, (speed / Math.max(peakSpeedRef.current, 0.01)) * 90);
+        if (movingRef.current && speedVal > 0.05) {
+          const arrowLen = Math.min(90, (speedVal / Math.max(peakSpeedRef.current, 0.01)) * 90);
           ctx.strokeStyle = "#f59a3d";
           ctx.lineWidth = 3;
           ctx.beginPath();
@@ -166,19 +194,27 @@ export function MotionMeasurementSandbox() {
         ctx.stroke();
 
         // Live readout
-        ctx.textAlign = "left";
-        ctx.fillStyle = "#17202a";
-        ctx.font = "600 12px 'SFMono-Regular', Consolas, monospace";
-        ctx.fillText(`Position: ${unitAt(x).toFixed(1)} u`, START_X, 22);
-        ctx.fillText(`Speed: ${(speed * 0.83).toFixed(1)} u/s`, START_X + 160, 22);
+        if (showValuesRef.current) {
+          ctx.textAlign = "left";
+          ctx.fillStyle = "#17202a";
+          ctx.font = "600 12px 'SFMono-Regular', Consolas, monospace";
+          ctx.fillText(`Position: ${unitAt(x).toFixed(1)} u`, START_X, 22);
+          ctx.fillText(`Speed: ${(speedVal * 0.83).toFixed(1)} u/s`, START_X + 160, 22);
+        }
 
-        if (movingRef.current && speed < STOP_SPEED_THRESHOLD) {
+        if (movingRef.current) {
+          elapsedRef.current = (performance.now() - launchTimeRef.current) / 1000;
+        }
+
+        if (movingRef.current && speedVal < STOP_SPEED_THRESHOLD) {
           Matter.Body.setVelocity(object, { x: 0, y: 0 });
           movingRef.current = false;
           const actual = Math.round(unitAt(x) * 2) / 2;
           const guess = predictionRef.current;
           const diff = Math.abs(actual - guess);
           setPhase("done");
+          setFinalPosition(actual);
+          setTimeTaken(elapsedRef.current);
           setLog((prev) => [
             ...prev,
             "Motion detected: the object's position changed over time — this is Motion.",
@@ -210,6 +246,10 @@ export function MotionMeasurementSandbox() {
     }
 
     peakSpeedRef.current = 0;
+    launchTimeRef.current = performance.now();
+    elapsedRef.current = 0;
+    setFinalPosition(null);
+    setTimeTaken(null);
     Matter.Body.setVelocity(object, { x: forceRef.current * VELOCITY_PER_FORCE, y: 0 });
     movingRef.current = true;
     setPhase("running");
@@ -237,8 +277,21 @@ export function MotionMeasurementSandbox() {
     movingRef.current = false;
     ghostsRef.current = [];
     peakSpeedRef.current = 0;
+    elapsedRef.current = 0;
+    setFinalPosition(null);
+    setTimeTaken(null);
     setPhase("idle");
     setLog(["Ready"]);
+  };
+
+  const toggleFullscreen = () => {
+    const el = wrapRef.current;
+    if (!el) return;
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else {
+      el.requestFullscreen?.();
+    }
   };
 
   return (
@@ -276,7 +329,10 @@ export function MotionMeasurementSandbox() {
         </div>
       </div>
 
-      <div className="kx-sandbox-canvas-wrap">
+      <div className="kx-sandbox-canvas-wrap" ref={wrapRef}>
+        <button type="button" className="kx-sandbox-fullscreen-btn" onClick={toggleFullscreen} aria-label="Toggle fullscreen">
+          <Maximize2 size={14} /> Fullscreen
+        </button>
         <canvas
           ref={canvasRef}
           width={CANVAS_WIDTH}
@@ -288,6 +344,32 @@ export function MotionMeasurementSandbox() {
         />
       </div>
 
+      <div className="kx-sandbox-toolbar">
+        <div className="kx-sandbox-speed">
+          <button type="button" className="kx-sandbox-speed-btn" onClick={() => setSpeedMenuOpen((v) => !v)}>
+            Speed: {speed}x <ChevronDown size={14} />
+          </button>
+          {speedMenuOpen && (
+            <div className="kx-sandbox-speed-menu">
+              {[0.5, 1, 2].map((s) => (
+                <button key={s} type="button" onClick={() => { setSpeed(s as Speed); setSpeedMenuOpen(false); }}>
+                  {s}x
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <label className="kx-sandbox-toggle">
+          <input type="checkbox" checked={showRuler} onChange={(e) => setShowRuler(e.target.checked)} />
+          Show ruler
+        </label>
+        <label className="kx-sandbox-toggle">
+          <input type="checkbox" checked={showValues} onChange={(e) => setShowValues(e.target.checked)} />
+          Show values
+        </label>
+      </div>
+
       <div className="kx-sandbox-actions">
         <button type="button" className="kx-btn kx-btn-primary" onClick={launch} disabled={phase === "running"}>
           {phase === "done" ? "Run Again" : "Start Experiment"}
@@ -297,12 +379,43 @@ export function MotionMeasurementSandbox() {
         </button>
       </div>
 
-      <div className="kx-sandbox-log" aria-live="polite">
-        {log.map((line, i) => (
-          <div key={i} className="kx-sandbox-log-line">
-            {line}
+      <div className="kx-stat-row" style={{ marginTop: 16, marginBottom: 0 }}>
+        <div className="kx-stat-card">
+          <div className="kx-sandbox-stat-icon"><ArrowRight size={16} /></div>
+          <div className="kx-stat-value" style={{ fontSize: 18 }}>{force} N</div>
+          <div className="kx-stat-label">Force applied</div>
+        </div>
+        <div className="kx-stat-card">
+          <div className="kx-sandbox-stat-icon"><Waves size={16} /></div>
+          <div className="kx-stat-value" style={{ fontSize: 18 }}>{FRICTION_AIR.toFixed(3)}</div>
+          <div className="kx-stat-label">Friction (μ)</div>
+        </div>
+        <div className="kx-stat-card">
+          <div className="kx-sandbox-stat-icon"><Flag size={16} /></div>
+          <div className="kx-stat-value" style={{ fontSize: 18 }}>{finalPosition !== null ? `${finalPosition} m` : "—"}</div>
+          <div className="kx-stat-label">Final position</div>
+        </div>
+        <div className="kx-stat-card">
+          <div className="kx-sandbox-stat-icon"><Clock size={16} /></div>
+          <div className="kx-stat-value" style={{ fontSize: 18 }}>{timeTaken !== null ? `${timeTaken.toFixed(1)} s` : "—"}</div>
+          <div className="kx-stat-label">Time taken</div>
+        </div>
+      </div>
+
+      <div className="kx-sandbox-log-wrap">
+        <button type="button" className="kx-sandbox-log-header" onClick={() => setLogOpen((v) => !v)}>
+          Simulation log
+          <ChevronDown size={16} style={{ transform: logOpen ? "rotate(180deg)" : "none", transition: "transform 0.15s" }} />
+        </button>
+        {logOpen && (
+          <div className="kx-sandbox-log" aria-live="polite">
+            {log.map((line, i) => (
+              <div key={i} className="kx-sandbox-log-line">
+                {line}
+              </div>
+            ))}
           </div>
-        ))}
+        )}
       </div>
     </div>
   );

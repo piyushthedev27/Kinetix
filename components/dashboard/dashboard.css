@@ -585,48 +585,191 @@
   margin: 0 auto 20px;
 }
 
-/* ---------- Topic list (experiment library) ---------- */
+/* ---------- Experiments header + illustration ---------- */
 
-.kx-topic-grade {
-  margin-top: 28px;
+.kx-experiments-header {
+  display: flex;
+  align-items: stretch;
+  gap: 24px;
+  margin-bottom: 8px;
 }
 
-.kx-topic-grade:first-of-type {
+.kx-experiments-header > .kx-page-header {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.kx-experiments-illustration {
+  flex-shrink: 0;
+  width: 300px;
+  border-radius: var(--r-lg, 14px);
+  background: linear-gradient(135deg, var(--lime-soft, #eff8d4), var(--surface-2, #f1f3f0));
+  padding: 18px 22px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.kx-experiments-illustration svg {
+  width: 100%;
+  height: 72px;
+  flex-shrink: 0;
+}
+
+.kx-experiments-illustration-text {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink, #17202a);
+  line-height: 1.3;
+  margin: 0;
+}
+
+.kx-experiments-illustration-rule {
+  width: 30px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--lime-dark, #9ccb25);
   margin-top: 8px;
+}
+
+@media (max-width: 850px) {
+  .kx-experiments-header {
+    flex-direction: column;
+  }
+  .kx-experiments-illustration {
+    width: auto;
+    min-height: 140px;
+  }
+}
+
+/* ---------- Topic sections (experiment library) ---------- */
+
+.kx-topic-section {
+  margin-top: 32px;
+  padding-left: 16px;
+  border-left: 3px solid var(--lime-dark, #9ccb25);
+}
+
+.kx-topic-section:first-of-type {
+  margin-top: 24px;
+}
+
+.kx-topic-section-title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink, #17202a);
+  margin: 0 0 4px;
+}
+
+.kx-topic-section-desc {
+  font-size: 13px;
+  color: var(--muted, #56616d);
+  margin: 0 0 16px;
 }
 
 .kx-topic-list {
   display: grid;
-  gap: 8px;
+  gap: 10px;
 }
 
-.kx-topic-item {
+.kx-topic-card {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+  gap: 14px;
   background: var(--surface, #ffffff);
   border: 1px solid var(--line, #dde2de);
   border-radius: var(--r-md, 10px);
   padding: 14px 16px;
-  font-size: 14px;
-  font-weight: 500;
   color: var(--ink, #17202a);
-  transition: border-color 0.15s ease, background 0.15s ease;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-.kx-topic-item[data-available="true"] {
+.kx-topic-card[data-available="true"] {
   cursor: pointer;
 }
 
-.kx-topic-item[data-available="true"]:hover {
+.kx-topic-card[data-available="true"]:hover {
   border-color: var(--lime-dark, #9ccb25);
-  background: var(--lime-soft, #eff8d4);
+  box-shadow: var(--shadow, 0 1px 2px rgb(23 32 42 / 4%), 0 8px 24px rgb(23 32 42 / 6%));
 }
 
-.kx-topic-item[data-available="false"] {
-  color: var(--quiet, #8b96a3);
+.kx-topic-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: var(--lime-soft, #eff8d4);
+  display: grid;
+  place-items: center;
+  color: var(--ink, #17202a);
+}
+
+.kx-topic-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.kx-topic-card[data-available="false"] .kx-topic-icon {
   background: var(--surface-2, #f1f3f0);
+  color: var(--quiet, #8b96a3);
+}
+
+.kx-topic-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.kx-topic-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.kx-topic-card[data-available="false"] .kx-topic-title {
+  color: var(--quiet, #8b96a3);
+}
+
+.kx-topic-desc {
+  font-size: 12.5px;
+  color: var(--muted, #56616d);
+  margin: 2px 0 0;
+}
+
+.kx-topic-pill {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.kx-topic-pill[data-ready="true"] {
+  background: var(--green-soft, #e7f6ed);
+  color: var(--green, #3baa70);
+}
+
+.kx-topic-pill[data-ready="false"] {
+  background: var(--surface-2, #f1f3f0);
+  color: var(--quiet, #8b96a3);
+}
+
+.kx-topic-pill-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.kx-topic-chevron {
+  flex-shrink: 0;
+  color: var(--quiet, #8b96a3);
 }
 
 /* ---------- Sandbox ---------- */
@@ -713,6 +856,143 @@
   overflow-x: auto;
   border-radius: var(--r-md, 10px);
   background: var(--surface-2, #f1f3f0);
+  position: relative;
+}
+
+.kx-sandbox-canvas-wrap:fullscreen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ink, #17202a);
+}
+
+.kx-sandbox-canvas-wrap:fullscreen .kx-sandbox-canvas {
+  max-width: 90vw;
+  max-height: 90vh;
+  width: auto;
+}
+
+.kx-sandbox-fullscreen-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line, #dde2de);
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--ink, #17202a);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.kx-sandbox-fullscreen-btn:hover {
+  background: #fff;
+}
+
+.kx-sandbox-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--muted, #56616d);
+}
+
+.kx-sandbox-speed {
+  position: relative;
+}
+
+.kx-sandbox-speed-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: var(--r-sm, 6px);
+  border: 1px solid var(--line, #dde2de);
+  background: var(--surface, #ffffff);
+  color: var(--ink, #17202a);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.kx-sandbox-speed-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  background: var(--surface, #ffffff);
+  border: 1px solid var(--line, #dde2de);
+  border-radius: var(--r-sm, 6px);
+  box-shadow: var(--shadow, 0 1px 2px rgb(23 32 42 / 4%), 0 8px 24px rgb(23 32 42 / 6%));
+  z-index: 5;
+  overflow: hidden;
+}
+
+.kx-sandbox-speed-menu button {
+  display: block;
+  width: 100%;
+  padding: 8px 16px;
+  border: none;
+  background: none;
+  text-align: left;
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--ink, #17202a);
+}
+
+.kx-sandbox-speed-menu button:hover {
+  background: var(--surface-2, #f1f3f0);
+}
+
+.kx-sandbox-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.kx-sandbox-stat-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: var(--lime-soft, #eff8d4);
+  color: var(--ink, #17202a);
+  margin-bottom: 8px;
+}
+
+.kx-sandbox-log-wrap {
+  margin-top: 16px;
+}
+
+.kx-sandbox-log-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 16px;
+  background: var(--surface-2, #f1f3f0);
+  border: 1px solid var(--line, #dde2de);
+  border-radius: var(--r-md, 10px);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink, #17202a);
+  cursor: pointer;
+}
+
+.kx-sandbox-log-wrap .kx-sandbox-log {
+  margin-top: 8px;
+  border-top-left-radius: var(--r-md, 10px);
+  border-top-right-radius: var(--r-md, 10px);
 }
 
 .kx-sandbox-canvas {
@@ -748,6 +1028,268 @@
 .kx-sandbox-log-line::before {
   content: "> ";
   opacity: 0.6;
+}
+
+/* ---------- Experiment layout (breadcrumb + 2D/3D + chat) ---------- */
+
+.kx-experiment-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted, #56616d);
+  margin-bottom: 16px;
+}
+
+.kx-experiment-breadcrumb a {
+  color: var(--muted, #56616d);
+  text-decoration: none;
+}
+
+.kx-experiment-breadcrumb a:hover {
+  color: var(--ink, #17202a);
+}
+
+.kx-experiment-breadcrumb-current {
+  color: var(--ink, #17202a);
+  text-transform: none;
+  letter-spacing: normal;
+  font-weight: 500;
+}
+
+.kx-experiment-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.kx-view-toggle {
+  display: inline-flex;
+  padding: 4px;
+  border-radius: 999px;
+  border: 1px solid var(--line, #dde2de);
+  background: var(--surface, #ffffff);
+  flex-shrink: 0;
+  gap: 4px;
+}
+
+.kx-view-toggle button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: none;
+  background: none;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted, #56616d);
+  cursor: pointer;
+}
+
+.kx-view-toggle button[data-active="true"] {
+  background: var(--lime, #b7e33a);
+  color: var(--ink, #17202a);
+}
+
+.kx-experiment-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  margin-top: 20px;
+}
+
+.kx-experiment-main {
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 1024px) {
+  .kx-experiment-layout {
+    flex-direction: column;
+  }
+}
+
+/* ---------- AI chat panel ---------- */
+
+.kx-chat-panel {
+  width: 340px;
+  flex-shrink: 0;
+  background: var(--surface, #ffffff);
+  border: 1px solid var(--line, #dde2de);
+  border-radius: var(--r-lg, 14px);
+  display: flex;
+  flex-direction: column;
+  max-height: 720px;
+  overflow: hidden;
+}
+
+@media (max-width: 1024px) {
+  .kx-chat-panel {
+    width: 100%;
+  }
+}
+
+.kx-chat-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line, #dde2de);
+}
+
+.kx-chat-header-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: var(--lime-soft, #eff8d4);
+  display: grid;
+  place-items: center;
+  color: var(--ink, #17202a);
+  flex-shrink: 0;
+}
+
+.kx-chat-header-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.kx-chat-header-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink, #17202a);
+}
+
+.kx-chat-header-subtitle {
+  font-size: 12px;
+  color: var(--muted, #56616d);
+}
+
+.kx-chat-minimize {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  border: 1px solid var(--line, #dde2de);
+  background: var(--surface, #ffffff);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  color: var(--muted, #56616d);
+}
+
+.kx-chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 220px;
+  max-height: 420px;
+}
+
+.kx-chat-bubble {
+  max-width: 88%;
+  padding: 10px 13px;
+  border-radius: var(--r-md, 10px);
+  font-size: 13px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.kx-chat-bubble[data-role="assistant"] {
+  align-self: flex-start;
+  background: var(--surface-2, #f1f3f0);
+  color: var(--ink, #17202a);
+  border-bottom-left-radius: 3px;
+}
+
+.kx-chat-bubble[data-role="user"] {
+  align-self: flex-end;
+  background: var(--lime, #b7e33a);
+  color: var(--ink, #17202a);
+  border-bottom-right-radius: 3px;
+}
+
+.kx-chat-bubble[data-loading="true"] {
+  opacity: 0.6;
+  font-style: italic;
+}
+
+.kx-chat-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0 16px 12px;
+}
+
+.kx-chat-suggestion-chip {
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line, #dde2de);
+  background: var(--surface, #ffffff);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink, #17202a);
+  cursor: pointer;
+}
+
+.kx-chat-suggestion-chip:hover {
+  border-color: var(--lime-dark, #9ccb25);
+  background: var(--lime-soft, #eff8d4);
+}
+
+.kx-chat-suggestion-chip:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.kx-chat-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--line, #dde2de);
+}
+
+.kx-chat-input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line, #dde2de);
+  background: var(--surface-2, #f1f3f0);
+  font-size: 13px;
+  color: var(--ink, #17202a);
+}
+
+.kx-chat-input:focus {
+  outline: none;
+  border-color: var(--lime-dark, #9ccb25);
+}
+
+.kx-chat-send {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: none;
+  background: var(--lime, #b7e33a);
+  color: var(--ink, #17202a);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.kx-chat-send:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 /* ---------- Source-of-energy cards ---------- */
