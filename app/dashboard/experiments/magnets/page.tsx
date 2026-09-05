@@ -1,24 +1,24 @@
-import Link from "next/link";
+import { ExperimentPageShell } from "@/components/dashboard/experiment/ExperimentPageShell";
 import { MagnetsSandbox } from "@/components/dashboard/sandbox/MagnetsSandbox";
 
 export default function MagnetsPage() {
   return (
-    <div className="app-content library">
-      <div className="kx-page-header">
-        <p className="kx-page-eyebrow">Class 6 · Fun with Magnets</p>
-        <h1 className="kx-page-title">Some poles pull. Some poles push.</h1>
-        <p className="kx-page-subtitle">
-          Choose which poles face each other, predict what happens, then release the magnet and watch.
-        </p>
-      </div>
-
+    <ExperimentPageShell
+      topicId="fun-with-magnets"
+      slug="magnets"
+      grade="Class 6"
+      eyebrow="Fun with Magnets"
+      title="Some poles pull. Some poles push."
+      subtitle="Choose which poles face each other, predict what happens, then release the magnet and watch."
+      chatSummary="Two bar magnets face each other. When unlike poles (N and S) face each other they attract; when like poles (N and N) face each other they repel. The student predicts attract or repel before releasing the movable magnet."
+      suggestedQuestions={[
+        "Why do unlike poles attract?",
+        "What would happen if I flipped the magnet around?",
+        "Do magnets only work on other magnets?",
+        "What is a magnetic field?",
+      ]}
+    >
       <MagnetsSandbox />
-
-      <div style={{ marginTop: 20 }}>
-        <Link href="/dashboard/experiments" className="kx-btn kx-btn-secondary">
-          Back to topics
-        </Link>
-      </div>
-    </div>
+    </ExperimentPageShell>
   );
 }

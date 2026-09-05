@@ -1,24 +1,24 @@
-import Link from "next/link";
+import { ExperimentPageShell } from "@/components/dashboard/experiment/ExperimentPageShell";
 import { HeatSandbox } from "@/components/dashboard/sandbox/HeatSandbox";
 
 export default function HeatPage() {
   return (
-    <div className="app-content library">
-      <div className="kx-page-header">
-        <p className="kx-page-eyebrow">Class 7 · Heat</p>
-        <h1 className="kx-page-title">Heat is particles moving faster.</h1>
-        <p className="kx-page-subtitle">
-          Turn up the temperature and watch a tidy solid shake loose into a liquid, then a gas.
-        </p>
-      </div>
-
+    <ExperimentPageShell
+      topicId="heat"
+      slug="heat"
+      grade="Class 7"
+      eyebrow="Heat"
+      title="Heat is particles moving faster."
+      subtitle="Turn up the temperature and watch a tidy solid shake loose into a liquid, then a gas."
+      chatSummary="A block of particles starts as a tightly packed solid. As the student raises the temperature, particles vibrate faster and eventually break free — melting into a liquid, then evaporating into a gas — illustrating that heat is particle motion energy."
+      suggestedQuestions={[
+        "Why does heating make particles move faster?",
+        "What is actually happening when a solid melts?",
+        "Is there a difference between heat and temperature?",
+        "Why do gases spread out more than liquids?",
+      ]}
+    >
       <HeatSandbox />
-
-      <div style={{ marginTop: 20 }}>
-        <Link href="/dashboard/experiments" className="kx-btn kx-btn-secondary">
-          Back to topics
-        </Link>
-      </div>
-    </div>
+    </ExperimentPageShell>
   );
 }

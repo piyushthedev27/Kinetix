@@ -1,24 +1,24 @@
-import Link from "next/link";
+import { ExperimentPageShell } from "@/components/dashboard/experiment/ExperimentPageShell";
 import { ShadowsSandbox } from "@/components/dashboard/sandbox/ShadowsSandbox";
 
 export default function ShadowsPage() {
   return (
-    <div className="app-content library">
-      <div className="kx-page-header">
-        <p className="kx-page-eyebrow">Class 6 · Light, Shadows and Reflections</p>
-        <h1 className="kx-page-title">Move the light. Watch the shadow change.</h1>
-        <p className="kx-page-subtitle">
-          Predict what happens when the light rises, then check the shadow&apos;s length for yourself.
-        </p>
-      </div>
-
+    <ExperimentPageShell
+      topicId="light-shadows-reflections"
+      slug="shadows"
+      grade="Class 6"
+      eyebrow="Light, Shadows and Reflections"
+      title="Move the light. Watch the shadow change."
+      subtitle="Predict what happens when the light rises, then check the shadow's length for yourself."
+      chatSummary="A light source shines on an opaque object standing on the ground, casting a shadow. The student can move the light higher or farther away and predict whether the shadow gets longer or shorter, then check the measured shadow length."
+      suggestedQuestions={[
+        "Why does raising the light make the shadow shorter?",
+        "What makes a shadow form in the first place?",
+        "Would the shadow disappear if the light were directly overhead?",
+        "How is this related to reflection?",
+      ]}
+    >
       <ShadowsSandbox />
-
-      <div style={{ marginTop: 20 }}>
-        <Link href="/dashboard/experiments" className="kx-btn kx-btn-secondary">
-          Back to topics
-        </Link>
-      </div>
-    </div>
+    </ExperimentPageShell>
   );
 }

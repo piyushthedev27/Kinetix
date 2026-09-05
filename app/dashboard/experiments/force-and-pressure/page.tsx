@@ -1,24 +1,24 @@
-import Link from "next/link";
+import { ExperimentPageShell } from "@/components/dashboard/experiment/ExperimentPageShell";
 import { ForceAndPressureSandbox } from "@/components/dashboard/sandbox/ForceAndPressureSandbox";
 
 export default function ForceAndPressurePage() {
   return (
-    <div className="app-content library">
-      <div className="kx-page-header">
-        <p className="kx-page-eyebrow">Class 8 · Force and Pressure</p>
-        <h1 className="kx-page-title">Same force, different area, very different result.</h1>
-        <p className="kx-page-subtitle">
-          Pick a shape and a force, then watch how much it sinks in — pressure is force spread over an area.
-        </p>
-      </div>
-
+    <ExperimentPageShell
+      topicId="force-and-pressure"
+      slug="force-and-pressure"
+      grade="Class 8"
+      eyebrow="Force and Pressure"
+      title="Same force, different area, very different result."
+      subtitle="Pick a shape and a force, then watch how much it sinks in — pressure is force spread over an area."
+      chatSummary="An object presses down on a soft surface with an adjustable force, and the student can change the contact area (e.g. a flat base vs. a pointed one). The same force sinks in far more when spread over a smaller area, showing pressure = force / area."
+      suggestedQuestions={[
+        "Why does a smaller area cause more sinking for the same force?",
+        "What is the formula for pressure?",
+        "Why do knives have thin blades?",
+        "How is this related to why snowshoes work?",
+      ]}
+    >
       <ForceAndPressureSandbox />
-
-      <div style={{ marginTop: 20 }}>
-        <Link href="/dashboard/experiments" className="kx-btn kx-btn-secondary">
-          Back to topics
-        </Link>
-      </div>
-    </div>
+    </ExperimentPageShell>
   );
 }

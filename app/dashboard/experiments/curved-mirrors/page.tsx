@@ -1,24 +1,24 @@
-import Link from "next/link";
+import { ExperimentPageShell } from "@/components/dashboard/experiment/ExperimentPageShell";
 import { CurvedMirrorSandbox } from "@/components/dashboard/sandbox/CurvedMirrorSandbox";
 
 export default function CurvedMirrorsPage() {
   return (
-    <div className="app-content library">
-      <div className="kx-page-header">
-        <p className="kx-page-eyebrow">Class 8 · Light</p>
-        <h1 className="kx-page-title">Curved mirrors bend the rules.</h1>
-        <p className="kx-page-subtitle">
-          Move the object, switch between concave and convex, and see whether the image is real or virtual, upright or flipped.
-        </p>
-      </div>
-
+    <ExperimentPageShell
+      topicId="light-8"
+      slug="curved-mirrors"
+      grade="Class 8"
+      eyebrow="Light"
+      title="Curved mirrors bend the rules."
+      subtitle="Move the object, switch between concave and convex, and see whether the image is real or virtual, upright or flipped."
+      chatSummary="An object sits in front of a mirror the student can switch between concave and convex, moving the object closer or farther away. Depending on the mirror type and distance, the resulting image is real or virtual, upright or inverted, magnified or reduced."
+      suggestedQuestions={[
+        "What's the difference between a concave and convex mirror?",
+        "Why does a concave mirror sometimes flip the image?",
+        "What is a real image versus a virtual image?",
+        "Where are curved mirrors used in real life?",
+      ]}
+    >
       <CurvedMirrorSandbox />
-
-      <div style={{ marginTop: 20 }}>
-        <Link href="/dashboard/experiments" className="kx-btn kx-btn-secondary">
-          Back to topics
-        </Link>
-      </div>
-    </div>
+    </ExperimentPageShell>
   );
 }

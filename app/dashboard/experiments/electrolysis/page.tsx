@@ -1,24 +1,24 @@
-import Link from "next/link";
+import { ExperimentPageShell } from "@/components/dashboard/experiment/ExperimentPageShell";
 import { ElectrolysisSandbox } from "@/components/dashboard/sandbox/ElectrolysisSandbox";
 
 export default function ElectrolysisPage() {
   return (
-    <div className="app-content library">
-      <div className="kx-page-header">
-        <p className="kx-page-eyebrow">Class 8 · Chemical Effects of Electric Current</p>
-        <h1 className="kx-page-title">Current can trigger a chemical reaction.</h1>
-        <p className="kx-page-subtitle">
-          Turn up the voltage and watch bubbles form faster at each electrode.
-        </p>
-      </div>
-
+    <ExperimentPageShell
+      topicId="chemical-effects-electric-current"
+      slug="electrolysis"
+      grade="Class 8"
+      eyebrow="Chemical Effects of Electric Current"
+      title="Current can trigger a chemical reaction."
+      subtitle="Turn up the voltage and watch bubbles form faster at each electrode."
+      chatSummary="Two electrodes sit in a conducting liquid with a voltage the student can adjust. Raising the voltage speeds up the chemical reaction, producing bubbles faster at each electrode — a demonstration of the chemical effects of electric current."
+      suggestedQuestions={[
+        "Why does current cause bubbles to form at the electrodes?",
+        "What is electrolysis used for?",
+        "Why does raising the voltage speed up the reaction?",
+        "What is happening chemically at each electrode?",
+      ]}
+    >
       <ElectrolysisSandbox />
-
-      <div style={{ marginTop: 20 }}>
-        <Link href="/dashboard/experiments" className="kx-btn kx-btn-secondary">
-          Back to topics
-        </Link>
-      </div>
-    </div>
+    </ExperimentPageShell>
   );
 }

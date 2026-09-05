@@ -1,24 +1,24 @@
-import Link from "next/link";
+import { ExperimentPageShell } from "@/components/dashboard/experiment/ExperimentPageShell";
 import { MotionGraphSandbox } from "@/components/dashboard/sandbox/MotionGraphSandbox";
 
 export default function MotionGraphsPage() {
   return (
-    <div className="app-content library">
-      <div className="kx-page-header">
-        <p className="kx-page-eyebrow">Class 9 · Motion</p>
-        <h1 className="kx-page-title">The graph is the story of the motion.</h1>
-        <p className="kx-page-subtitle">
-          Launch the object and watch its distance–time and speed–time graphs draw themselves in real time.
-        </p>
-      </div>
-
+    <ExperimentPageShell
+      topicId="motion"
+      slug="motion-graphs"
+      grade="Class 9"
+      eyebrow="Motion"
+      title="The graph is the story of the motion."
+      subtitle="Launch the object and watch its distance-time and speed-time graphs draw themselves in real time."
+      chatSummary="An object moves under settings the student controls, while distance-time and speed-time graphs draw themselves live alongside the motion. The shape of each graph — its slope, curve, or flat sections — directly reflects what the object is doing."
+      suggestedQuestions={[
+        "What does the slope of a distance-time graph tell us?",
+        "How is a speed-time graph different from a distance-time graph?",
+        "What does a flat line on the speed-time graph mean?",
+        "How can I read acceleration from a speed-time graph?",
+      ]}
+    >
       <MotionGraphSandbox />
-
-      <div style={{ marginTop: 20 }}>
-        <Link href="/dashboard/experiments" className="kx-btn kx-btn-secondary">
-          Back to topics
-        </Link>
-      </div>
-    </div>
+    </ExperimentPageShell>
   );
 }

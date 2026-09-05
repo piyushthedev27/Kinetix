@@ -1,24 +1,24 @@
-import Link from "next/link";
+import { ExperimentPageShell } from "@/components/dashboard/experiment/ExperimentPageShell";
 import { SourcesOfEnergySandbox } from "@/components/dashboard/sandbox/SourcesOfEnergySandbox";
 
 export default function SourcesOfEnergyPage() {
   return (
-    <div className="app-content library">
-      <div className="kx-page-header">
-        <p className="kx-page-eyebrow">Class 10 · Sources of Energy</p>
-        <h1 className="kx-page-title">Renewable or not?</h1>
-        <p className="kx-page-subtitle">
-          Sort each energy source, then check which ones nature replenishes — and which ones we&apos;re using up.
-        </p>
-      </div>
-
+    <ExperimentPageShell
+      topicId="sources-of-energy"
+      slug="sources-of-energy"
+      grade="Class 10"
+      eyebrow="Sources of Energy"
+      title="Renewable or not?"
+      subtitle="Sort each energy source, then check which ones nature replenishes — and which ones we're using up."
+      chatSummary="The student sorts a set of energy sources (solar, wind, coal, oil, etc.) into renewable and non-renewable categories, then checks their answers — renewable sources are naturally replenished, while non-renewable ones are finite and being used up."
+      suggestedQuestions={[
+        "What makes an energy source renewable?",
+        "Why are fossil fuels considered non-renewable?",
+        "What are some examples of renewable energy sources?",
+        "Why does it matter whether an energy source is renewable?",
+      ]}
+    >
       <SourcesOfEnergySandbox />
-
-      <div style={{ marginTop: 20 }}>
-        <Link href="/dashboard/experiments" className="kx-btn kx-btn-secondary">
-          Back to topics
-        </Link>
-      </div>
-    </div>
+    </ExperimentPageShell>
   );
 }

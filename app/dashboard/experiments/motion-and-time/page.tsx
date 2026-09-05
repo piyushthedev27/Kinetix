@@ -1,24 +1,24 @@
-import Link from "next/link";
+import { ExperimentPageShell } from "@/components/dashboard/experiment/ExperimentPageShell";
 import { MotionAndTimeSandbox } from "@/components/dashboard/sandbox/MotionAndTimeSandbox";
 
 export default function MotionAndTimePage() {
   return (
-    <div className="app-content library">
-      <div className="kx-page-header">
-        <p className="kx-page-eyebrow">Class 7 · Motion and Time</p>
-        <h1 className="kx-page-title">Same finish line, two different speeds.</h1>
-        <p className="kx-page-subtitle">
-          Set a speed for each racer, predict the winner, then watch the clock decide who covers the distance faster.
-        </p>
-      </div>
-
+    <ExperimentPageShell
+      topicId="motion-and-time"
+      slug="motion-and-time"
+      grade="Class 7"
+      eyebrow="Motion and Time"
+      title="Same finish line, two different speeds."
+      subtitle="Set a speed for each racer, predict the winner, then watch the clock decide who covers the distance faster."
+      chatSummary="Two racers move toward the same finish line at speeds the student sets. The student predicts which racer arrives first, then watches a live clock and distance readout confirm the outcome — speed is distance covered per unit time."
+      suggestedQuestions={[
+        "Why does the faster racer win even if they start together?",
+        "How is speed calculated from distance and time?",
+        "What would happen if both racers had the same speed?",
+        "What's the difference between speed and velocity?",
+      ]}
+    >
       <MotionAndTimeSandbox />
-
-      <div style={{ marginTop: 20 }}>
-        <Link href="/dashboard/experiments" className="kx-btn kx-btn-secondary">
-          Back to topics
-        </Link>
-      </div>
-    </div>
+    </ExperimentPageShell>
   );
 }

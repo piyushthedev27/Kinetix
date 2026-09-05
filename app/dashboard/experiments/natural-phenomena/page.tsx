@@ -1,24 +1,24 @@
-import Link from "next/link";
+import { ExperimentPageShell } from "@/components/dashboard/experiment/ExperimentPageShell";
 import { NaturalPhenomenaSandbox } from "@/components/dashboard/sandbox/NaturalPhenomenaSandbox";
 
 export default function NaturalPhenomenaPage() {
   return (
-    <div className="app-content library">
-      <div className="kx-page-header">
-        <p className="kx-page-eyebrow">Class 8 · Some Natural Phenomena</p>
-        <h1 className="kx-page-title">Sudden charge. Spreading waves.</h1>
-        <p className="kx-page-subtitle">
-          Build up static charge until lightning strikes, or set an earthquake&apos;s epicenter and watch the seismic waves travel outward.
-        </p>
-      </div>
-
+    <ExperimentPageShell
+      topicId="natural-phenomena"
+      slug="natural-phenomena"
+      grade="Class 8"
+      eyebrow="Some Natural Phenomena"
+      title="Sudden charge. Spreading waves."
+      subtitle="Build up static charge until lightning strikes, or set an earthquake's epicenter and watch the seismic waves travel outward."
+      chatSummary="Two demonstrations: building static charge until it discharges as a lightning-like spark, and setting an earthquake epicenter to watch seismic waves ripple outward across a map. Both show natural phenomena caused by energy building up and suddenly releasing or spreading."
+      suggestedQuestions={[
+        "How does lightning actually form?",
+        "Why do earthquakes create waves that spread outward?",
+        "What is static electricity?",
+        "Can earthquakes be predicted?",
+      ]}
+    >
       <NaturalPhenomenaSandbox />
-
-      <div style={{ marginTop: 20 }}>
-        <Link href="/dashboard/experiments" className="kx-btn kx-btn-secondary">
-          Back to topics
-        </Link>
-      </div>
-    </div>
+    </ExperimentPageShell>
   );
 }

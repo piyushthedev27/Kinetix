@@ -1,24 +1,24 @@
-import Link from "next/link";
+import { ExperimentPageShell } from "@/components/dashboard/experiment/ExperimentPageShell";
 import { SoundInterferenceSandbox } from "@/components/dashboard/sandbox/SoundInterferenceSandbox";
 
 export default function SoundInterferencePage() {
   return (
-    <div className="app-content library">
-      <div className="kx-page-header">
-        <p className="kx-page-eyebrow">Class 9 · Sound</p>
-        <h1 className="kx-page-title">Two sounds can add up — or cancel out.</h1>
-        <p className="kx-page-subtitle">
-          Shift the phase between two identical sound sources and predict whether the result gets louder or quieter.
-        </p>
-      </div>
-
+    <ExperimentPageShell
+      topicId="sound-9"
+      slug="sound-interference"
+      grade="Class 9"
+      eyebrow="Sound"
+      title="Two sounds can add up — or cancel out."
+      subtitle="Shift the phase between two identical sound sources and predict whether the result gets louder or quieter."
+      chatSummary="Two identical sound sources overlap, and the student can shift the phase between them. When the waves line up, they add together for a louder sound; when they're out of phase, they cancel and the sound gets quieter — this is wave interference."
+      suggestedQuestions={[
+        "What is constructive versus destructive interference?",
+        "Why do two sounds sometimes cancel each other out?",
+        "What does 'phase' mean for a wave?",
+        "Where is sound interference used in real life?",
+      ]}
+    >
       <SoundInterferenceSandbox />
-
-      <div style={{ marginTop: 20 }}>
-        <Link href="/dashboard/experiments" className="kx-btn kx-btn-secondary">
-          Back to topics
-        </Link>
-      </div>
-    </div>
+    </ExperimentPageShell>
   );
 }
